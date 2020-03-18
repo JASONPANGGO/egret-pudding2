@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="skins.GameScene" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*"
+        xmlns:com="com.*" width="750" height="1334">
+	<w:Config id="1699015f821" />
+
+
+	<e:Group id="conBg" width="1334" height="1334" horizontalCenter="0" verticalCenter="0">
+		<e:Rect width="1334" height="730" y="0" fillColor="0x61baff" scaleX="1" scaleY="1" x="0"/>
+		<e:Rect width="1334" height="670" x="0" y="730" fillColor="0x4ea9f0" scaleX="1" scaleY="1"/>
+		<e:Rect width="1334" height="3" x="0" y="730" fillColor="0x000000"/>
+		<e:Image source="pwindow_png" x="943.64" y="463.91"/>
+		<e:Image source="pwindow_png" x="339.73" y="463.91"/>
+		<e:Group id="con" x="370" y="390" anchorOffsetX="0" width="602" anchorOffsetY="0" height="790">
+			<e:Group id="light_con" x="495.69" y="199.7">
+			<e:Image id="light_down" source="plight2_png" x="4.01" y="27.29"/>
+			<e:Image id="light_up" source="plight1_png" x="0" y="0"/>
+			</e:Group>
+			<e:Group id="oldman_con" x="7.69" y="358.7">
+			<e:Image id="oldman_bed" source="pbeizi4_png" x="0" y="1" scaleX="1" scaleY="1"/>
+			<e:Image id="oldman" source="poldman1_png" x="51" y="12" scaleX="1" scaleY="1"/>
+			<e:Image id="oldman_cover" source="pbeizi1_png" x="5" y="-4" scaleX="1" scaleY="1"/>
+			</e:Group>
+			<e:Group id="pboy_con" x="526.49" y="433.64" width="400" height="400" anchorOffsetX="200" anchorOffsetY="400">
+				<com:ComMovieClip id="pboy_mc" horizontalCenter="0" bottom="0" width="400" height="400" anchorOffsetX="200" anchorOffsetY="400"/>
+			</e:Group>
+			<e:Group id="pgirl_con" x="-363.51" y="643.64" width="400" height="400" anchorOffsetX="200" anchorOffsetY="400">
+				<com:ComMovieClip id="pgirl_mc" horizontalCenter="0" bottom="0" width="400" height="400" anchorOffsetX="200" anchorOffsetY="400"/>
+			</e:Group>
+			<e:Image id="POS_peopleInit" width="0" height="0" x="-311" y="659" scaleX="1" scaleY="1"/>
+			<e:Image id="POS_boyStart" width="0" height="0" x="182.32" y="659" scaleX="1" scaleY="1"/>
+			<e:Image id="POS_girlWalk1" width="0" height="0" x="312.33" y="659" scaleX="1" scaleY="1"/>
+			<e:Image id="POS_girlWalk2" width="0" height="0" x="578.97" y="659" scaleX="1" scaleY="1"/>
+			<e:Image id="POS_boyLamp1" width="0" height="0" x="526" y="433" scaleX="1" scaleY="1"/>
+			<e:Image id="POS_boyLamp2" width="0" height="0" x="526" y="357" scaleX="1" scaleY="1"/>
+		</e:Group>
+		<e:Group id="progress_con" y="269.6" horizontalCenter="10">
+			<e:Image source="pframe3_png" x="0" y="0"/>
+			<e:Image id="progress_red" source="pframe2_png" x="0" y="0"/>
+			<e:Image source="pframe1_png" x="0" y="0"/>
+			<e:Group id="progress_mask_con" y="0" width="0" height="74" left="0">
+				<e:Rect id="progress_mask" height="74" y="0" fillAlpha="1" fillColor="0x53edc5" left="0" right="0"/>
+				<com:ComMovieClip id="progress_girl_mc" y="0" right="-50"/>
+			</e:Group>
+			<e:Image source="pword_png" x="368.19" y="37"/>
+		</e:Group>
+		<e:Group id="tips" y="1050" right="0" left="0">
+			<e:Image source="pwordframe_png" fillMode="repeat" anchorOffsetX="0" y="0" right="0" left="0"/>
+			<e:Image source="pword2_png" horizontalCenter="0.5" top="23"/>
+			<e:Image source="pword1_png" horizontalCenter="0.5" top="74"/>
+		</e:Group>
+		<e:Group id="guide_1" x="419.32" y="828.64" anchorOffsetX="25" anchorOffsetY="25" width="50" height="50"/>
+		<e:Group id="guide_2" x="766.66" y="833.31" anchorOffsetX="25" anchorOffsetY="25" width="50" height="50"/>
+		<e:Group id="guide_3" x="896.65" y="621.98" anchorOffsetX="25" anchorOffsetY="25" width="50" height="50"/>
+
+
+	</e:Group>
+
+	<!--<e:Group id="conParticles" horizontalCenter="0" top="0" touchChildren="false" touchEnabled="false">
+	</e:Group>-->
+
+	<!--<e:Group id="conFloat" x="0" width="100%" height="82%" bottom="0">
+	<e:Rect id="floatDebug" width="100%" height="100%" fillColor="0x00ff00" fillAlpha="0.3" x="0" y="0" visible="false" />
+</e:Group>
+-->
+</e:Skin>

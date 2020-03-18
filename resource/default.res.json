@@ -1,0 +1,255 @@
+{
+	"groups": [
+		{
+			"keys": "bbutton1_png,blogo_png,button2_png,button3_png,ppeople_ske_json,ppeople_tex_json,ppeople_tex_png,eframe_png,epic2_png,pbeizi1_png,pbeizi2_png,pbeizi3_png,pbeizi4_png,pboy01_png,pboy02_png,pboy03_png,pboy04_png,pboy05_png,pboy06_png,pboy07_png,pboy08_png,pboy09_png,pboy10_png,pboy11_png,pboy12_png,pboy13_png,pendframe_png,pframe1_png,pframe2_png,pframe3_png,pgirl01_png,pgirl02_png,pgirl03_png,pgirl04_png,pgirl05_png,pgirl06_png,psmallgirl1_png,psmallgirl2_png,plight1_png,plight2_png,poldman1_png,poldman2_png,pwindow_png,pword_png,pword1_png,pword2_png,pwordframe_png,description_json,gameConfig_json",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/image/bbutton1.png",
+			"type": "image",
+			"name": "bbutton1_png"
+		},
+		{
+			"url": "assets/image/blogo.png",
+			"type": "image",
+			"name": "blogo_png"
+		},
+		{
+			"url": "assets/image/button2.png",
+			"type": "image",
+			"name": "button2_png"
+		},
+		{
+			"url": "assets/image/button3.png",
+			"type": "image",
+			"name": "button3_png"
+		},
+		{
+			"url": "assets/image/eframe.png",
+			"type": "image",
+			"name": "eframe_png"
+		},
+		{
+			"url": "assets/image/epic2.png",
+			"type": "image",
+			"name": "epic2_png"
+		},
+		{
+			"url": "assets/image/pbeizi1.png",
+			"type": "image",
+			"name": "pbeizi1_png"
+		},
+		{
+			"url": "assets/image/pbeizi2.png",
+			"type": "image",
+			"name": "pbeizi2_png"
+		},
+		{
+			"url": "assets/image/pbeizi3.png",
+			"type": "image",
+			"name": "pbeizi3_png"
+		},
+		{
+			"url": "assets/image/pbeizi4.png",
+			"type": "image",
+			"name": "pbeizi4_png"
+		},
+		{
+			"url": "assets/image/pendframe.png",
+			"type": "image",
+			"name": "pendframe_png"
+		},
+		{
+			"url": "assets/image/pframe1.png",
+			"type": "image",
+			"name": "pframe1_png"
+		},
+		{
+			"url": "assets/image/pframe2.png",
+			"type": "image",
+			"name": "pframe2_png"
+		},
+		{
+			"url": "assets/image/pframe3.png",
+			"type": "image",
+			"name": "pframe3_png"
+		},
+		{
+			"url": "assets/image/plight1.png",
+			"type": "image",
+			"name": "plight1_png"
+		},
+		{
+			"url": "assets/image/plight2.png",
+			"type": "image",
+			"name": "plight2_png"
+		},
+		{
+			"url": "assets/image/poldman1.png",
+			"type": "image",
+			"name": "poldman1_png"
+		},
+		{
+			"url": "assets/image/poldman2.png",
+			"type": "image",
+			"name": "poldman2_png"
+		},
+		{
+			"url": "assets/image/pwindow.png",
+			"type": "image",
+			"name": "pwindow_png"
+		},
+		{
+			"url": "assets/image/pword.png",
+			"type": "image",
+			"name": "pword_png"
+		},
+		{
+			"url": "assets/image/pword1.png",
+			"type": "image",
+			"name": "pword1_png"
+		},
+		{
+			"url": "assets/image/pword2.png",
+			"type": "image",
+			"name": "pword2_png"
+		},
+		{
+			"url": "assets/image/pwordframe.png",
+			"type": "image",
+			"name": "pwordframe_png"
+		},
+		{
+			"url": "assets/image/pboy/pboy01.png",
+			"type": "image",
+			"name": "pboy01_png"
+		},
+		{
+			"url": "assets/image/pboy/pboy02.png",
+			"type": "image",
+			"name": "pboy02_png"
+		},
+		{
+			"url": "assets/image/pboy/pboy03.png",
+			"type": "image",
+			"name": "pboy03_png"
+		},
+		{
+			"url": "assets/image/pboy/pboy04.png",
+			"type": "image",
+			"name": "pboy04_png"
+		},
+		{
+			"url": "assets/image/pboy/pboy05.png",
+			"type": "image",
+			"name": "pboy05_png"
+		},
+		{
+			"url": "assets/image/pboy/pboy06.png",
+			"type": "image",
+			"name": "pboy06_png"
+		},
+		{
+			"url": "assets/image/pboy/pboy07.png",
+			"type": "image",
+			"name": "pboy07_png"
+		},
+		{
+			"url": "assets/image/pboy/pboy08.png",
+			"type": "image",
+			"name": "pboy08_png"
+		},
+		{
+			"url": "assets/image/pboy/pboy09.png",
+			"type": "image",
+			"name": "pboy09_png"
+		},
+		{
+			"url": "assets/image/pboy/pboy10.png",
+			"type": "image",
+			"name": "pboy10_png"
+		},
+		{
+			"url": "assets/image/pboy/pboy11.png",
+			"type": "image",
+			"name": "pboy11_png"
+		},
+		{
+			"url": "assets/image/pboy/pboy12.png",
+			"type": "image",
+			"name": "pboy12_png"
+		},
+		{
+			"url": "assets/image/pboy/pboy13.png",
+			"type": "image",
+			"name": "pboy13_png"
+		},
+		{
+			"url": "assets/image/pgirl/pgirl01.png",
+			"type": "image",
+			"name": "pgirl01_png"
+		},
+		{
+			"url": "assets/image/pgirl/pgirl02.png",
+			"type": "image",
+			"name": "pgirl02_png"
+		},
+		{
+			"url": "assets/image/pgirl/pgirl03.png",
+			"type": "image",
+			"name": "pgirl03_png"
+		},
+		{
+			"url": "assets/image/pgirl/pgirl04.png",
+			"type": "image",
+			"name": "pgirl04_png"
+		},
+		{
+			"url": "assets/image/pgirl/pgirl05.png",
+			"type": "image",
+			"name": "pgirl05_png"
+		},
+		{
+			"url": "assets/image/pgirl/pgirl06.png",
+			"type": "image",
+			"name": "pgirl06_png"
+		},
+		{
+			"url": "assets/image/pgirl/psmallgirl1.png",
+			"type": "image",
+			"name": "psmallgirl1_png"
+		},
+		{
+			"url": "assets/image/pgirl/psmallgirl2.png",
+			"type": "image",
+			"name": "psmallgirl2_png"
+		},
+		{
+			"url": "assets/image/dragonBones/ppeople/ppeople_tex.png",
+			"type": "image",
+			"name": "ppeople_tex_png"
+		},
+		{
+			"url": "assets/image/dragonBones/ppeople/ppeople_ske.json",
+			"type": "json",
+			"name": "ppeople_ske_json"
+		},
+		{
+			"url": "assets/image/dragonBones/ppeople/ppeople_tex.json",
+			"type": "json",
+			"name": "ppeople_tex_json"
+		},
+		{
+			"url": "config/description.json",
+			"type": "json",
+			"name": "description_json"
+		},
+		{
+			"url": "config/gameConfig.json",
+			"type": "json",
+			"name": "gameConfig_json"
+		}
+	]
+}
