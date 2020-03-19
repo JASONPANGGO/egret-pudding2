@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="skins.UiEnd" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing"
         xmlns:ns1="*" xmlns:com="com.*" xmlns:tween="egret.tween.*" width="750">
-	<e:Group id="gPeople" verticalCenter="90" horizontalCenter="-40%">
-		<e:Group id="conPeople" width="549" height="825" anchorOffsetX="274.5" anchorOffsetY="412.5" scaleX="1.3" scaleY="1.3" x="356.85" y="536.25">
-			<e:Image id="people" source="ui4_people_png" x="274.5" y="412.5" anchorOffsetX="274.5" anchorOffsetY="412.5"/>
-			<e:Group id="conPattern" x="480" y="380" scaleX="0.14" scaleY="0.15" anchorOffsetX="310" anchorOffsetY="310" rotation="-20" width="620" height="620">
-				<e:Image id="patternDebug" source="ui5_pic_png" anchorOffsetX="259.5" anchorOffsetY="229" horizontalCenter="0" verticalCenter="0"/>
-			</e:Group>
+	<e:Group id="conBg" width="750" y="667" x="375" height="1334" anchorOffsetX="375" anchorOffsetY="667">
+		<e:Image id="bg" source="pendframe_png" fillMode="repeat" left="0" right="0" top="0" bottom="0"/>
+		<e:Group id="bg_mask" left="0" top="0" bottom="0" right="0">
+			<e:Rect left="0" right="0" top="0" bottom="0"/>
+			<e:Rect id="erase_mask" height="680" y="297.15" width="530" blendMode="erase" fillColor="0xc64d4d" x="110"/>
 		</e:Group>
-
+		<e:Group id="con" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" verticalCenter="-30.5" height="713">
+			<e:Image source="eframe_png" y="0" x="0"/>
+			<e:Image source="eframe_png" y="0" x="0"/>
+			<e:Image id="boygirl" source="epic2_png" y="158.72" horizontalCenter="0" visible="false"/>
+		</e:Group>
+		<e:Image id="btnRe" source="button3_png" y="1081.94" horizontalCenter="0" visible="false"/>
+		<e:Image id="logo" source="blogo_png" y="78" horizontalCenter="-1" visible="false"/>
 	</e:Group>
+
 	<!--<w:Declarations>
 	<tween:TweenGroup id="cool">
 		<tween:TweenItem target="{con_cool_0}">

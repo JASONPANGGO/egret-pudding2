@@ -162,8 +162,7 @@ var scene;
             // console.info("resizeView", this.width, this.height, GameMgr.screenType, GameMgr.mobileType);
             this.dispatchEventWith(gConst.eventType.RESIZE_VIEW);
             var baseScale = gConst.mobileByScale[GameMgr.screenType][GameMgr.mobileType];
-            this.conBg.scaleX = this.conBg.scaleY = Math.max(this.width / this.conBg.width, this.height / this.conBg.height);
-            // this.con.scaleX = this.con.scaleY = baseScale
+            this.conBg.scaleX = this.conBg.scaleY = this.width / this.con.width;
             if (GameMgr.screenType == 1 /* VERTICAL */) {
                 //竖屏
                 switch (GameMgr.mobileType) {
@@ -308,7 +307,8 @@ var scene;
             this.pgirl_mc.bm.horizontalCenter = 0;
             this.pgirl_mc.bm.bottom = 0;
             this.pgirl_mc.setData([new data.McData('girl_walk', 4, 'pgirl0{1}_png'),
-                new data.McData('girl_find', 2, 'pgirl0{1}_png', { firstIndex: 5 })]);
+                new data.McData('girl_shake', 2, 'pgirl0{1}_png', { firstIndex: 4 }),
+                new data.McData('girl_find', 1, 'pgirl0{1}_png', { firstIndex: 6 })]);
         };
         GameScene.prototype.boyEnter = function () {
             var _this = this;
@@ -338,13 +338,40 @@ var scene;
             }, this, 1000);
         };
         GameScene.prototype.initProgress = function () {
+            var _this = this;
             this.progress_red.mask = this.progress_mask;
             this.progress_mask_con.width = 0;
+            egret.setTimeout(function () {
+                gTween.toBigShow(_this.progress_tips, 300, void 0, void 0, egret.Ease.bounceOut, void 0, {
+                    callback: function () {
+                        gTween.loopFloat(_this.progress_tips);
+                    }
+                });
+            }, this, 500);
         };
         GameScene.prototype.progressStart = function () {
-            gTween.toWidthChange(this.progress_mask_con, 15 * 1000, this.progress_red.width);
+            var _this = this;
+            gTween.toWidthChange(this.progress_mask_con, 15 * 1000, this.progress_red.width, void 0, void 0, void 0, {
+                callback: function () {
+                    if (_this.playerAction)
+                        return;
+                    gSoundMgr.playEff('smtimeup');
+                    _this.pgirl_con.x = _this.POS_peopleInit1.x;
+                    _this.pgirl_con.y = _this.POS_peopleInit1.y;
+                    _this.girlWalkTo({ x: _this.POS_girlWalk2.x, y: _this.POS_girlWalk2.y }, function () {
+                        _this.girlFind();
+                        _this.boyFound('boy_fail_lamp');
+                    });
+                }
+            });
             this.progress_girl_mc.interval = 200;
             this.progress_girl_mc.gotoAndPlay('progress');
+            egret.setTimeout(function () {
+                var st1 = new util.ShakeTool();
+                var st2 = new util.ShakeTool();
+                st1.shakeObj(_this.progress_girl_mc, 7 * 1000, 15, 5, 5);
+                st2.shakeObj(_this.progress_tips, 7 * 1000, 15, 5, 5);
+            }, this, 8 * 1000);
         };
         GameScene.prototype.progressStop = function () {
             gTween.rmTweens(this.progress_mask_con);
@@ -355,15 +382,99 @@ var scene;
         };
         // 床尾
         GameScene.prototype.boyAction1 = function (event) {
+            var _this = this;
+            gSoundMgr.playEff('smclick');
             this.progressStop();
+            var boyAction1 = this.POS_boyAction1;
+            var guidePoint = this.guide_1;
+            this.pboy_con.scaleX = -1;
+            this.pboy_mc.gotoAndPlay('boy_walk');
+            gTween.toMoveX(this.pboy_con, boyAction1.x, 300, void 0, void 0, void 0, {
+                callback: function () {
+                    _this.pboy_mc.gotoAndPlay('boy_go');
+                    gTween.toMove(_this.pboy_con, guidePoint.x - 100, guidePoint.y + 40, { x: 300, y: 300 }, void 0, void 0, void 0, { duration: 400 }, {
+                        callback: function () {
+                            _this.pboy_con.scaleX = 1;
+                            var boy_gp = gComMgr.toGlobal(_this.pboy_con);
+                            var boy_lp = gComMgr.toLocal(_this.oldman_con, boy_gp.x, boy_gp.y, boy_gp);
+                            _this.oldman_con.addChild(_this.pboy_con);
+                            _this.oldman_con.setChildIndex(_this.pboy_con, 3);
+                            _this.pboy_con.x = boy_lp.x;
+                            _this.pboy_con.y = boy_lp.y;
+                            _this.pboy_mc.gotoAndPlay('boy_crawl_right');
+                            gTween.toMoveX(_this.pboy_con, _this.pboy_con.x + 80, 300, void 0, void 0, void 0, {
+                                callback: function () {
+                                    _this.girlWalkTo({ x: _this.POS_girlWalk2.x, y: _this.POS_girlWalk2.y }, function () {
+                                        _this.girlShake(function () {
+                                            _this.pgirl_mc.interval = 180;
+                                            _this.pgirl_mc.gotoAndPlay('girl_walk');
+                                            _this.pgirl_con.scaleX = 1;
+                                            gSoundMgr.playEff('smrun');
+                                            gTween.toMoveX(_this.pgirl_con, _this.POS_peopleInit1.x, 4 * 180, void 0, void 0, void 0, {
+                                                callback: function () {
+                                                    _this.pboy_con.x += 140;
+                                                    _this.pboy_mc.gotoAndPlay('boy_success');
+                                                    _this.oldman_cover.visible = false;
+                                                    _this.cover_flipping.visible = true;
+                                                    gTween.toMove(_this.cover_flipping, _this.cover_flipping.x - 50, _this.cover_flipping.y - 50, { x: 300, y: 300 }, void 0, void 0, void 0, { duration: 300 }, {
+                                                        callback: function () {
+                                                            _this.cover_flipping.visible = false;
+                                                            _this.cover_flip.visible = true;
+                                                            _this.boySuccess();
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        });
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
         };
         // 床头
         GameScene.prototype.boyAction2 = function (event) {
+            var _this = this;
+            gSoundMgr.playEff('smclick');
             this.progressStop();
+            var boyAction2 = this.POS_boyAction2;
+            var guidePoint = this.guide_2;
+            this.pboy_mc.gotoAndPlay('boy_walk');
+            gTween.toMoveX(this.pboy_con, boyAction2.x, 300, void 0, void 0, void 0, {
+                callback: function () {
+                    _this.pboy_mc.gotoAndPlay('boy_go');
+                    gTween.toMove(_this.pboy_con, guidePoint.x, guidePoint.y + 50, { x: 300, y: 300 }, void 0, void 0, void 0, { duration: 400 }, {
+                        callback: function () {
+                            var boy_gp = gComMgr.toGlobal(_this.pboy_con);
+                            var boy_lp = gComMgr.toLocal(_this.oldman_con, boy_gp.x, boy_gp.y, boy_gp);
+                            _this.oldman_con.addChild(_this.pboy_con);
+                            _this.oldman_con.setChildIndex(_this.pboy_con, 3);
+                            _this.pboy_con.x = boy_lp.x;
+                            _this.pboy_con.y = boy_lp.y;
+                            _this.pboy_mc.gotoAndPlay('boy_crawl_left');
+                            gTween.toMoveX(_this.pboy_con, _this.pboy_con.x - 80, 300, void 0, void 0, void 0, {
+                                callback: function () {
+                                    _this.girlWalkTo({ x: _this.POS_girlWalk2.x, y: _this.POS_girlWalk2.y }, function () {
+                                        _this.girlShake(function () {
+                                            _this.girlFind();
+                                            _this.coverFlip();
+                                            _this.pboy_con.rotation = -90;
+                                            _this.boyFound('boy_fail_bed');
+                                        });
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
         };
         // 台灯
         GameScene.prototype.boyAction3 = function (event) {
             var _this = this;
+            gSoundMgr.playEff('smclick');
             this.progressStop();
             var boyLampPoint1 = this.POS_boyLamp1;
             var boyLampPoint2 = this.POS_boyLamp2;
@@ -376,25 +487,95 @@ var scene;
                     _this.light_up.y = -100;
                     egret.setTimeout(function () {
                         _this.girlWalkTo(_this.POS_girlWalk1, function () {
-                            _this.pgirl_con.scaleX = -1;
-                            _this.girlShockAndFind();
+                            _this.girlShake(function () {
+                                _this.girlFind();
+                                _this.boyFound('boy_fail_lamp');
+                                _this.lampMove();
+                            });
                         });
                     }, _this, 1000);
                 }
             });
         };
+        GameScene.prototype.boySuccess = function () {
+            var _this = this;
+            egret.setTimeout(function () {
+                _this.openCongrats();
+            }, this, 800);
+            gTween.toBottomHide(this.tips, 300);
+        };
+        GameScene.prototype.coverFlip = function () {
+            this.oldman_cover.visible = false;
+            this.cover_flip.visible = true;
+            this.oldman.y -= 30;
+            this.oldman.source = 'poldman2_png';
+            this.pboy_con.y -= 70;
+            this.pboy_con.x += 50;
+        };
+        // 获取男孩相对女孩的方位，true为右，false为左
+        GameScene.prototype.getBoyPOSbyGirl = function () {
+            return (this.pboy_con.x - this.pgirl_con.x) > 0;
+        };
         GameScene.prototype.girlWalkTo = function (POS, callback) {
+            gSoundMgr.playEff('smrun');
+            if (!this.getBoyPOSbyGirl()) {
+                this.pgirl_con.scaleX = -1;
+            }
+            else {
+                this.pgirl_con.scaleX = 1;
+            }
             this.pgirl_mc.interval = 180;
             this.pgirl_mc.gotoAndPlay('girl_walk');
-            gTween.toMoveX(this.pgirl_con, POS.x, 500, void 0, void 0, void 0, {
-                callback: function () {
-                    callback();
-                }
+            gTween.toMoveX(this.pgirl_con, POS.x, 4 * 180, void 0, void 0, void 0, {
+                callback: callback
             });
         };
-        GameScene.prototype.girlShockAndFind = function () {
+        GameScene.prototype.girlShake = function (callback) {
+            if (!this.getBoyPOSbyGirl()) {
+                this.pgirl_con.scaleX = -1;
+            }
+            else {
+                this.pgirl_con.scaleX = 1;
+            }
+            this.pgirl_mc.interval = 150;
+            this.pgirl_mc.gotoAndPlay('girl_shake', 3);
+            egret.setTimeout(function () {
+                callback();
+            }, this, 2 * 3 * 150);
+        };
+        GameScene.prototype.girlFind = function () {
+            // egret.setTimeout(() => {
+            var _this = this;
+            if (this.getBoyPOSbyGirl()) {
+                this.pgirl_con.scaleX = -1;
+            }
+            else {
+                this.pgirl_con.scaleX = 1;
+            }
             this.pgirl_mc.interval = 500;
             this.pgirl_mc.gotoAndPlay('girl_find', 1);
+            egret.setTimeout(function () {
+                _this.openEnd();
+            }, this, 800);
+            gTween.toBottomHide(this.tips, 300);
+            // }, this, 1300)
+        };
+        GameScene.prototype.boyFound = function (mcName) {
+            if (this.getBoyPOSbyGirl()) {
+                this.pboy_con.scaleX = -1;
+            }
+            else {
+                this.pboy_con.scaleX = 1;
+            }
+            var st = new util.ShakeTool();
+            st.shakeObj(this.pboy_con, 300, 10, 10, 10);
+            this.pboy_mc.scaleX = this.pboy_mc.scaleY = 1.1;
+            this.pboy_mc.gotoAndPlay(mcName);
+        };
+        GameScene.prototype.lampMove = function () {
+            this.light_up.x = -40;
+            this.light_up.y = -130;
+            this.light_up.rotation = -30;
         };
         GameScene.prototype.gameStart = function () {
             // console.info("gameStart");
@@ -503,13 +684,14 @@ var scene;
         };
         /** 打开恭喜页面 */
         GameScene.prototype.openCongrats = function () {
+            gSoundMgr.playEff('smsuccess');
+            this.sceneFadeOut();
             // console.info("openCongrats");
             // gTween.fadeIn(this.black, 300, 0.5);
             this.UiCongrats = gUiMgr.create(ui.UiCongrats);
             // this.UiCongrats.once(gConst.eventType.CLOSE, this.nextPass, this);
             // this.UiCongrats.once(gConst.eventType.GAME_END, this.gameEnd, this);
             this.UiCongrats.open();
-            gSoundMgr.playEff("sm_success");
         };
         /** 关闭恭喜页面 */
         GameScene.prototype.closeCongrats = function () {
@@ -540,10 +722,20 @@ var scene;
             }
             this.UiTranEnd.close();
         };
+        GameScene.prototype.sceneFadeOut = function () {
+            gTween.fadeOut(this.con, 300);
+            gTween.fadeOut(this.progress_con, 300);
+            gTween.fadeOut(this.window1, 300);
+            gTween.fadeOut(this.window2, 300);
+            this.progress_tips.visible = false;
+        };
         /** 打开结束界面 */
         GameScene.prototype.openEnd = function (isShowEnd) {
             if (isShowEnd === void 0) { isShowEnd = true; }
             // console.info("openEnd");
+            gSoundMgr.playEff('smfail');
+            this.sceneFadeOut();
+            this.closeFirst();
             egret.clearTimeout(this.endDelay);
             egret.clearTimeout(this.endToNoOperationDelay);
             if (GameMgr.isEnd) {
@@ -556,10 +748,10 @@ var scene;
             // GameMgr.stage.removeEventListener(egret.TouchEvent.TOUCH_TAP, Mapi.install, Mapi);
             // this.closePeople();
             // this.closeStart();
-            // this.UiEnd = gUiMgr.create(ui.UiEnd) as ui.UiEnd;
-            // this.UiEnd.hide();
-            // this.UiEnd.open();
-            // egret.setTimeout(this.showEnd, this, 500);
+            this.UiEnd = gUiMgr.create(ui.UiEnd);
+            this.UiEnd.hide();
+            this.UiEnd.open();
+            egret.setTimeout(this.showEnd, this, 500);
             // GameMgr.endType = gConst.endType.VICTORY;
             // this.showHead();
             // this.comPanel.stopBar();
@@ -604,7 +796,7 @@ var scene;
             // } else {
             // 	gSoundMgr.playEff("sm_fail");
             // }
-            this.openStart(3);
+            // this.openStart(3);
             this.gameEnd();
             this.showEndOther();
         };

@@ -274,6 +274,7 @@ var com;
             // factory.parseTextureAtlasData(textureAtlas, texture);
             this.armature = this.factory.buildArmature(this.armatureName);
             this.armatureDisplay = this.factory.buildArmatureDisplay(this.armatureName);
+            return this.armatureDisplay;
         };
         /** 初始化 */
         ComBones.prototype.init = function () {

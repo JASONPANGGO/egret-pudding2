@@ -1041,6 +1041,8 @@ namespace ui {
 			const conLogo = this.conLogo;
 			const conBtn = this.conBtn;
 
+
+
 			// conBtn.visible = this.screenType == gConst.screenType.VERTICAL && this.endShowBtn === "on";
 
 			// if (this.btnTxt && this.btnTxt.visible) {

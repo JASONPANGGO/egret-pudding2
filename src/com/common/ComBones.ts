@@ -310,6 +310,7 @@ namespace com {
 
 			this.armature = this.factory.buildArmature(this.armatureName);
 			this.armatureDisplay = this.factory.buildArmatureDisplay(this.armatureName);
+			return this.armatureDisplay
 		}
 
 		/** 初始化 */

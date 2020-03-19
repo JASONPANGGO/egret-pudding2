@@ -22,6 +22,9 @@ namespace scene {
 		public oldman_bed: eui.Image;
 		public oldman: eui.Image;
 		public oldman_cover: eui.Image;
+		public cover_flip: eui.Image;
+		public cover_flipping: eui.Image;
+
 
 		// 男孩
 		public pboy_con: eui.Group;
@@ -31,13 +34,13 @@ namespace scene {
 		public pgirl_con: eui.Group;
 		public pgirl_mc: com.ComMovieClip;
 
-
 		// 进度条
 		public progress_con: eui.Group;
 		public progress_red: eui.Image;
 		public progress_mask: eui.Rect;
 		public progress_mask_con: eui.Group;
 		public progress_girl_mc: com.ComMovieClip;
+		public progress_tips: eui.Image;
 
 		// 底部提示
 		public tips: eui.Group;
@@ -54,6 +57,15 @@ namespace scene {
 		public POS_girlWalk2: eui.Image;
 		public POS_boyLamp1: eui.Image;
 		public POS_boyLamp2: eui.Image;
+		public POS_peopleInit1: eui.Image;
+		public POS_boyAction2: eui.Image;
+		public POS_boyAction1: eui.Image;
+
+
+		// 窗户
+		public window1: eui.Image;
+		public window2: eui.Image;
+
 
 		private UiFirst: ui.UiFirst;
 		private UiStart: ui.UiStart;
@@ -241,10 +253,7 @@ namespace scene {
 			this.dispatchEventWith(gConst.eventType.RESIZE_VIEW);
 
 			const baseScale: number = gConst.mobileByScale[GameMgr.screenType][GameMgr.mobileType];
-
-			this.conBg.scaleX = this.conBg.scaleY = Math.max(this.width / this.conBg.width, this.height / this.conBg.height)
-			// this.con.scaleX = this.con.scaleY = baseScale
-
+			this.conBg.scaleX = this.conBg.scaleY = this.width / this.con.width
 
 			if (GameMgr.screenType == gConst.screenType.VERTICAL) {
 				//竖屏
@@ -415,7 +424,8 @@ namespace scene {
 			this.pgirl_mc.bm.horizontalCenter = 0
 			this.pgirl_mc.bm.bottom = 0
 			this.pgirl_mc.setData([new data.McData('girl_walk', 4, 'pgirl0{1}_png'),
-			new data.McData('girl_find', 2, 'pgirl0{1}_png', { firstIndex: 5 })])
+			new data.McData('girl_shake', 2, 'pgirl0{1}_png', { firstIndex: 4 }),
+			new data.McData('girl_find', 1, 'pgirl0{1}_png', { firstIndex: 6 })])
 		}
 
 		private boyEnter() {
@@ -448,13 +458,41 @@ namespace scene {
 		private initProgress() {
 			this.progress_red.mask = this.progress_mask
 			this.progress_mask_con.width = 0
+
+			egret.setTimeout(() => {
+				gTween.toBigShow(this.progress_tips, 300, void 0, void 0, egret.Ease.bounceOut, void 0, {
+					callback: () => {
+						gTween.loopFloat(this.progress_tips)
+					}
+				})
+			}, this, 500)
 		}
 
 		private progressStart() {
-			gTween.toWidthChange(this.progress_mask_con, 15 * 1000, this.progress_red.width)
+			gTween.toWidthChange(this.progress_mask_con, 15 * 1000, this.progress_red.width, void 0, void 0, void 0, {
+				callback: () => {
+					if (this.playerAction) return
+					gSoundMgr.playEff('smtimeup')
+					this.pgirl_con.x = this.POS_peopleInit1.x
+					this.pgirl_con.y = this.POS_peopleInit1.y
+					this.girlWalkTo({ x: this.POS_girlWalk2.x, y: this.POS_girlWalk2.y }, () => {
+						this.girlFind()
+						this.boyFound('boy_fail_lamp')
+					})
+				}
+			})
 			this.progress_girl_mc.interval = 200
 			this.progress_girl_mc.gotoAndPlay('progress')
+			egret.setTimeout(() => {
+				let st1 = new util.ShakeTool()
+				let st2 = new util.ShakeTool()
+				st1.shakeObj(this.progress_girl_mc, 7 * 1000, 15, 5, 5)
+				st2.shakeObj(this.progress_tips, 7 * 1000, 15, 5, 5)
+			}, this, 8 * 1000)
+
 		}
+
+
 
 		private progressStop() {
 			gTween.rmTweens(this.progress_mask_con)
@@ -468,20 +506,107 @@ namespace scene {
 
 		// 床尾
 		private boyAction1(event: egret.TouchEvent) {
+			gSoundMgr.playEff('smclick')
 			this.progressStop()
+			const boyAction1 = this.POS_boyAction1
+			const guidePoint = this.guide_1
+
+			this.pboy_con.scaleX = -1
+			this.pboy_mc.gotoAndPlay('boy_walk')
+			gTween.toMoveX(this.pboy_con, boyAction1.x, 300, void 0, void 0, void 0, {
+				callback: () => {
+					this.pboy_mc.gotoAndPlay('boy_go')
+					gTween.toMove(this.pboy_con, guidePoint.x - 100, guidePoint.y + 40, { x: 300, y: 300 }, void 0, void 0, void 0, { duration: 400 }, {
+						callback: () => {
+							this.pboy_con.scaleX = 1
+							let boy_gp = gComMgr.toGlobal(this.pboy_con)
+							let boy_lp = gComMgr.toLocal(this.oldman_con, boy_gp.x, boy_gp.y, boy_gp)
+							this.oldman_con.addChild(this.pboy_con)
+							this.oldman_con.setChildIndex(this.pboy_con, 3)
+							this.pboy_con.x = boy_lp.x
+							this.pboy_con.y = boy_lp.y
+
+							this.pboy_mc.gotoAndPlay('boy_crawl_right')
+							gTween.toMoveX(this.pboy_con, this.pboy_con.x + 80, 300, void 0, void 0, void 0, {
+								callback: () => {
+									this.girlWalkTo({ x: this.POS_girlWalk2.x, y: this.POS_girlWalk2.y }, () => {
+										this.girlShake(() => {
+											this.pgirl_mc.interval = 180
+											this.pgirl_mc.gotoAndPlay('girl_walk')
+											this.pgirl_con.scaleX = 1
+											gSoundMgr.playEff('smrun')
+											gTween.toMoveX(this.pgirl_con, this.POS_peopleInit1.x, 4 * 180, void 0, void 0, void 0, {
+												callback: () => {
+													this.pboy_con.x += 140
+													this.pboy_mc.gotoAndPlay('boy_success')
+													this.oldman_cover.visible = false
+													this.cover_flipping.visible = true
+													gTween.toMove(this.cover_flipping, this.cover_flipping.x - 50, this.cover_flipping.y - 50, { x: 300, y: 300 }, void 0, void 0, void 0, { duration: 300 }, {
+														callback: () => {
+															this.cover_flipping.visible = false
+															this.cover_flip.visible = true
+															this.boySuccess()
+														}
+													})
+												}
+											})
+										})
+									})
+								}
+							})
+						}
+					})
+				}
+			})
 
 
 		}
 
 		// 床头
 		private boyAction2(event: egret.TouchEvent) {
+			gSoundMgr.playEff('smclick')
 			this.progressStop()
+			const boyAction2 = this.POS_boyAction2
+			const guidePoint = this.guide_2
 
+			this.pboy_mc.gotoAndPlay('boy_walk')
+			gTween.toMoveX(this.pboy_con, boyAction2.x, 300, void 0, void 0, void 0, {
+				callback: () => {
+					this.pboy_mc.gotoAndPlay('boy_go')
+					gTween.toMove(this.pboy_con, guidePoint.x, guidePoint.y + 50, { x: 300, y: 300 }, void 0, void 0, void 0, { duration: 400 }, {
+						callback: () => {
+
+							let boy_gp = gComMgr.toGlobal(this.pboy_con)
+							let boy_lp = gComMgr.toLocal(this.oldman_con, boy_gp.x, boy_gp.y, boy_gp)
+							this.oldman_con.addChild(this.pboy_con)
+							this.oldman_con.setChildIndex(this.pboy_con, 3)
+							this.pboy_con.x = boy_lp.x
+							this.pboy_con.y = boy_lp.y
+
+
+							this.pboy_mc.gotoAndPlay('boy_crawl_left')
+							gTween.toMoveX(this.pboy_con, this.pboy_con.x - 80, 300, void 0, void 0, void 0, {
+								callback: () => {
+									this.girlWalkTo({ x: this.POS_girlWalk2.x, y: this.POS_girlWalk2.y }, () => {
+										this.girlShake(() => {
+											this.girlFind()
+											this.coverFlip()
+											this.pboy_con.rotation = -90
+											this.boyFound('boy_fail_bed')
+										})
+									})
+								}
+							})
+						}
+					})
+				}
+			})
 
 		}
 
 		// 台灯
 		private boyAction3(event: egret.TouchEvent) {
+			gSoundMgr.playEff('smclick')
 			this.progressStop()
 			const boyLampPoint1 = this.POS_boyLamp1
 			const boyLampPoint2 = this.POS_boyLamp2
@@ -495,27 +620,100 @@ namespace scene {
 					this.light_up.y = -100
 					egret.setTimeout(() => {
 						this.girlWalkTo(this.POS_girlWalk1, () => {
-							this.pgirl_con.scaleX = -1
-							this.girlShockAndFind()
+							this.girlShake(() => {
+								this.girlFind()
+								this.boyFound('boy_fail_lamp')
+								this.lampMove()
+							})
 						})
 					}, this, 1000)
 				}
 			})
 		}
 
+		private boySuccess() {
+			egret.setTimeout(() => {
+				this.openCongrats()
+			}, this, 800)
+			gTween.toBottomHide(this.tips, 300)
+		}
+
+		private coverFlip() {
+			this.oldman_cover.visible = false
+			this.cover_flip.visible = true
+			this.oldman.y -= 30
+			this.oldman.source = 'poldman2_png'
+			this.pboy_con.y -= 70
+			this.pboy_con.x += 50
+
+		}
+
+		// 获取男孩相对女孩的方位，true为右，false为左
+		private getBoyPOSbyGirl(): boolean {
+			return (this.pboy_con.x - this.pgirl_con.x) > 0
+		}
+
 		private girlWalkTo(POS: { x: number, y: number }, callback: Function) {
+			gSoundMgr.playEff('smrun')
+			if (!this.getBoyPOSbyGirl()) {
+				this.pgirl_con.scaleX = -1
+			} else {
+				this.pgirl_con.scaleX = 1
+			}
 			this.pgirl_mc.interval = 180
 			this.pgirl_mc.gotoAndPlay('girl_walk')
-			gTween.toMoveX(this.pgirl_con, POS.x, 500, void 0, void 0, void 0, {
-				callback: () => {
-					callback()
-				}
+			gTween.toMoveX(this.pgirl_con, POS.x, 4 * 180, void 0, void 0, void 0, {
+				callback: callback
 			})
 		}
 
-		private girlShockAndFind() {
+		private girlShake(callback: Function) {
+			if (!this.getBoyPOSbyGirl()) {
+				this.pgirl_con.scaleX = -1
+			} else {
+				this.pgirl_con.scaleX = 1
+			}
+			this.pgirl_mc.interval = 150
+			this.pgirl_mc.gotoAndPlay('girl_shake', 3)
+			egret.setTimeout(() => {
+				callback()
+			}, this, 2 * 3 * 150)
+		}
+
+		private girlFind() {
+			// egret.setTimeout(() => {
+
+			if (this.getBoyPOSbyGirl()) {
+				this.pgirl_con.scaleX = -1
+			} else {
+				this.pgirl_con.scaleX = 1
+			}
 			this.pgirl_mc.interval = 500
 			this.pgirl_mc.gotoAndPlay('girl_find', 1)
+
+			egret.setTimeout(() => {
+				this.openEnd()
+			}, this, 800)
+			gTween.toBottomHide(this.tips, 300)
+			// }, this, 1300)
+		}
+
+		private boyFound(mcName: string) {
+			if (this.getBoyPOSbyGirl()) {
+				this.pboy_con.scaleX = -1
+			} else {
+				this.pboy_con.scaleX = 1
+			}
+			let st = new util.ShakeTool()
+			st.shakeObj(this.pboy_con, 300, 10, 10, 10)
+			this.pboy_mc.scaleX = this.pboy_mc.scaleY = 1.1
+			this.pboy_mc.gotoAndPlay(mcName)
+		}
+
+		private lampMove() {
+			this.light_up.x = -40
+			this.light_up.y = -130
+			this.light_up.rotation = -30
 		}
 
 		// private lookYRatio: number;
@@ -733,13 +931,14 @@ namespace scene {
 
 		/** 打开恭喜页面 */
 		private openCongrats() {
+			gSoundMgr.playEff('smsuccess')
+			this.sceneFadeOut()
 			// console.info("openCongrats");
 			// gTween.fadeIn(this.black, 300, 0.5);
 			this.UiCongrats = gUiMgr.create(ui.UiCongrats) as ui.UiCongrats;
 			// this.UiCongrats.once(gConst.eventType.CLOSE, this.nextPass, this);
 			// this.UiCongrats.once(gConst.eventType.GAME_END, this.gameEnd, this);
 			this.UiCongrats.open();
-			gSoundMgr.playEff("sm_success");
 		}
 
 		/** 关闭恭喜页面 */
@@ -777,9 +976,21 @@ namespace scene {
 			this.UiTranEnd.close();
 		}
 
+		private sceneFadeOut() {
+			gTween.fadeOut(this.con, 300)
+			gTween.fadeOut(this.progress_con, 300)
+			gTween.fadeOut(this.window1, 300)
+			gTween.fadeOut(this.window2, 300)
+			this.progress_tips.visible = false
+
+		}
+
 		/** 打开结束界面 */
 		private openEnd(isShowEnd: boolean = true) {
 			// console.info("openEnd");
+			gSoundMgr.playEff('smfail')
+			this.sceneFadeOut()
+			this.closeFirst()
 			egret.clearTimeout(this.endDelay);
 			egret.clearTimeout(this.endToNoOperationDelay);
 			if (GameMgr.isEnd) {
@@ -795,10 +1006,10 @@ namespace scene {
 			// this.closePeople();
 			// this.closeStart();
 
-			// this.UiEnd = gUiMgr.create(ui.UiEnd) as ui.UiEnd;
-			// this.UiEnd.hide();
-			// this.UiEnd.open();
-			// egret.setTimeout(this.showEnd, this, 500);
+			this.UiEnd = gUiMgr.create(ui.UiEnd) as ui.UiEnd;
+			this.UiEnd.hide();
+			this.UiEnd.open();
+			egret.setTimeout(this.showEnd, this, 500);
 
 			// GameMgr.endType = gConst.endType.VICTORY;
 			// this.showHead();
@@ -851,7 +1062,7 @@ namespace scene {
 			// } else {
 			// 	gSoundMgr.playEff("sm_fail");
 			// }
-			this.openStart(3);
+			// this.openStart(3);
 			this.gameEnd();
 
 			this.showEndOther();

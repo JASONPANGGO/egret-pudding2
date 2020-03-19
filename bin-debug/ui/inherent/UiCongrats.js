@@ -39,20 +39,11 @@ var ui;
         /** 每次打开界面都会调用 */
         UiCongrats.prototype.start = function () {
             // console.info("start");
-            gSoundMgr.playEff("smmoney");
-            var con = this.con;
-            var txtMoney = this.txtMoney;
-            var conBtn = this.conBtn;
-            var btn = this.btn;
-            con.visible = false;
-            txtMoney.visible = false;
-            conBtn.visible = false;
-            btn.visible = false;
-            this.showBlack();
-            this.showBox();
-            // this.showWord();
-            // this.showBtn();
-            this.showCon();
+            this.bg.mask = this.bg_mask;
+            var boyBone = new com.ComBones();
+            boyBone.setData(this.conBoy, 'ppeople');
+            boyBone.play('people', 0);
+            boyBone.setPos({ x: void 0, y: 272 });
         };
         /** 每次结束界面都会调用 */
         UiCongrats.prototype.stop = function () {
@@ -66,12 +57,9 @@ var ui;
         UiCongrats.prototype.addEvent = function () {
             // console.info("addEvent");
             // this.btn.once(egret.TouchEvent.TOUCH_TAP, this.clickBtn, this);
-            this.conBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickItem, this);
         };
         /** 移除事件 */
         UiCongrats.prototype.removeEvent = function () {
-            // console.info("removeEvent");
-            this.conBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickItem, this);
         };
         /** 窗口大小改变时调用 */
         UiCongrats.prototype.resizeView = function () {
@@ -129,112 +117,6 @@ var ui;
             }
             else {
             }
-        };
-        /* =========== 框架结构代码-end =========== */
-        /* =========== 业务代码-start =========== */
-        UiCongrats.prototype.showBlack = function () {
-            gTween.fadeIn(this.black, 300);
-        };
-        UiCongrats.prototype.hideBlack = function () {
-            gTween.fadeOut(this.black, 300);
-        };
-        UiCongrats.prototype.showBox = function () {
-            var con = this.con;
-            var box = this.box;
-            if (!box) {
-                // gSoundMgr.playEff("sm_tanchu");
-                // gSoundMgr.playEff("sm_menglu");
-                box = this.box = new com.ComBones();
-                box.setData(con, "lang_hongbao" /* , { aimType: 0, time: 100 } */);
-                // box.setPoint({ x: con.width / 2, y: con.height });
-                box.setIndex(0);
-            }
-            box.play("outside", 0, true);
-            this.openBoxed = false;
-            this.once(egret.TouchEvent.TOUCH_TAP, this.openBox, this);
-            this.openBoxDelay = egret.setTimeout(this.openBox, this, gConst.autoOpenRedPakeTime);
-        };
-        UiCongrats.prototype.openBox = function (e) {
-            this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.openBox, this);
-            egret.clearTimeout(this.openBoxDelay);
-            if (this.openBoxed) {
-                return;
-            }
-            this.openBoxed = true;
-            var box = this.box;
-            var txtMoney = this.txtMoney;
-            var conBtn = this.conBtn;
-            var btn = this.btn;
-            if (!box) {
-                return;
-            }
-            box.play("inside");
-            var moneyId = this.moneyId;
-            txtMoney.visible = true;
-            gSoundMgr.playEff("smmoney" + moneyId + "_1");
-            var money = GameMgr.getConfig("redPackMeney" + moneyId);
-            txtMoney.text = money + "";
-            conBtn.visible = true;
-            gTween.toBigShow(btn, 200, 1, 1, void 0, void 0, {
-                callback: function () {
-                    gTween.yoyoBtn(btn);
-                }
-            });
-            this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.openBox, this);
-            GameMgr.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickCon, this, true);
-        };
-        UiCongrats.prototype.clickCon = function (e) {
-            if (!this.notClose) {
-                this.hideCon(e);
-            }
-            else {
-                this.clickInstall();
-            }
-        };
-        UiCongrats.prototype.hideBox = function () {
-            // this.box.playComplete();
-        };
-        /** 显示文字 */
-        // private showWord() {
-        // 	gTween.toBigShow(this.word, 200, 1, void 0, egret.Ease.backOut, void 0, {
-        // 		callback: this.floatWord,
-        // 		thisObj: this,
-        // 		params: [this.word, -20, 1000]
-        // 	});
-        // }
-        UiCongrats.prototype.showCon = function () {
-            // gTween.toBigShow(this.con, 200, 1, void 0, egret.Ease.cubicOut, void 0, { callback: this.showConFinish, thisObj: this });
-            this.con.visible = true;
-            // this.comBoxEnd.initPass();
-            // if (GameMgr.passId >= GameMgr.maxPassId) {
-            // 	this.createSuiPians();
-            // 	this.dispatchEventWith(gConst.eventType.GAME_END);
-            // 	this.comBoxEnd.turnFan();
-            // } else {
-            // 	this.comBoxEnd.once(gConst.eventType.IN_COMPLETE, this.showConFinish, this);
-            // }
-            // this.comBoxEnd.playShow();
-        };
-        UiCongrats.prototype.hideCon = function (event) {
-            var _this = this;
-            // if (event) {
-            // 	event.stopPropagation();
-            // 	// gSoundMgr.playEff("sm_select");
-            // }
-            GameMgr.stage.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickCon, this, true);
-            // egret.clearTimeout(this.hideConDelay);
-            var con = this.con;
-            // this.comBoxEnd.hideEff();
-            // gTween.toSmallHide(this.con, 200, 1, void 0, void 0, void 0, { callback: this.close, thisObj: this });
-            var baseScale = gConst.mobileByScale[this.screenType][this.mobileType];
-            gTween.toBigHide(con, 2, 300, baseScale, 1, void 0, void 0, {
-                callback: function () {
-                    _this.close();
-                }
-            });
-        };
-        UiCongrats.prototype.clickItem = function (e) {
-            Mapi.sendAction(4);
         };
         return UiCongrats;
     }(ui.UiFile));

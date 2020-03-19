@@ -37,10 +37,6 @@ var ui;
         /** 首次打开界面时调用 */
         UiEnd.prototype.load = function () {
             // console.info("load");
-            var conPeople = this.conPeople;
-            var people = this.people;
-            var patternDebug = this.patternDebug;
-            var heart = this.heart;
             // gComMgr.setItemAnchor(this.logo);
             // gComMgr.setItemAnchor(this.btn);
             // if (GameMgr.isShowReplay()) {
@@ -50,12 +46,6 @@ var ui;
             // this.mcBg.open();
             // this.mcBg.setData([new data.McData("bg", 2, "ending_{1}_png", { backplay: true })]);
             // this.mcBg.interval = 400;
-            gComMgr.setItemAnchor(people);
-            gComMgr.setObjSize(conPeople, true);
-            gComMgr.setItemAnchor(patternDebug);
-            gComMgr.setObjAnchor(heart);
-            patternDebug.visible = gConst.debugModel;
-            heart.visible = false;
         };
         /** 每次打开界面都会调用 */
         UiEnd.prototype.start = function () {
@@ -64,6 +54,7 @@ var ui;
             // this.showParticles();
             // }
             // this.mcBg.gotoAndPlay("bg");
+            var _this = this;
             // if (GameMgr.isShowReplay()) {
             // 	const space: number = 20;
             // 	// const conBtnH = this.replay.height + space + this.btn.height;
@@ -72,6 +63,17 @@ var ui;
             // 	// this.conBtn.anchorOffsetY = conBtnH / 2;
             // 	this.btn.y = this.replay.y + this.replay.anchorOffsetY + space + this.btn.anchorOffsetY;
             // }
+            this.bg.mask = this.bg_mask;
+            this.btnRe.visible = false;
+            this.logo.visible = false;
+            gTween.toScale(this.conBg, 1, 800, 1.8, egret.Ease.quadIn, void 0, {
+                callback: function () {
+                    gTween.fadeIn(_this.boygirl, 300);
+                    gTween.toTopShow(_this.btnRe, 1200, 500, void 0, 1, egret.Ease.elasticOut);
+                    gTween.toBottomShow(_this.logo, 1200, 500, void 0, 1, egret.Ease.elasticOut);
+                }
+            });
+            // gTween.toBottomShow(this)
         };
         /** 每次结束界面都会调用 */
         UiEnd.prototype.stop = function () {
@@ -87,13 +89,13 @@ var ui;
             if (gConst.globalClick) {
                 this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this);
             }
+            this.btnRe.addEventListener(egret.TouchEvent.TOUCH_TAP, this.restart, this);
             // this.btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickBtn, this);
             // if (GameMgr.replayInstall()) {
             // 	this.replay.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this);
             // } else {
             // 	this.replay.once(egret.TouchEvent.TOUCH_TAP, this.clickReplay, this);
             // }
-            GameMgr.gameview.once(gConst.eventType.ADD_PATTERN, this.addPattern, this);
         };
         /** 移除事件 */
         UiEnd.prototype.removeEvent = function () {
@@ -104,7 +106,6 @@ var ui;
             // this.btn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickBtn, this);
             // this.replay.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickReplay, this);
             // this.replay.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this);
-            GameMgr.gameview.removeEventListener(gConst.eventType.ADD_PATTERN, this.addPattern, this);
         };
         /** 窗口大小改变时调用 */
         UiEnd.prototype.resizeView = function () {
@@ -112,17 +113,14 @@ var ui;
             var baseScale = gConst.mobileByScale[GameMgr.screenType][GameMgr.mobileType];
             // const conLogo = this.conLogo;
             // const conBtn = this.conBtn;
-            // const conBg = this.conBg;
+            var conBg = this.conBg;
             // conLogo.scaleX = conLogo.scaleY = baseScale;
             // conBtn.scaleX = conBtn.scaleY = baseScale;
-            // conBg.scaleX = conBg.scaleY = Math.max(this.width / conBg.width, this.height / conBg.height);
+            conBg.scaleX = conBg.scaleY = Math.max(this.width / conBg.width, this.height / conBg.height);
             // conBg.width = this.width;
             // conBg.height = this.height;
             if (this.screenType == 1 /* VERTICAL */) {
                 //竖屏
-                // this.con_logo.y = Math.floor(this.height * .02);
-                // this.con_title.y = Math.floor(this.height * .35);
-                // this.con.y = Math.floor(this.height * .6);
                 switch (this.mobileType) {
                     //iPhoneX或以上
                     case 1 /* IPHONE_X */:
@@ -137,8 +135,6 @@ var ui;
             }
             else {
                 //横屏
-                // this.con.x = Math.floor(this.width * .75);
-                // conLogo.x = conBtn.x = Math.floor(this.width * .75);
                 switch (this.mobileType) {
                     //iPhoneX或以上
                     case 1 /* IPHONE_X */:
@@ -157,152 +153,17 @@ var ui;
         /** 屏幕横竖屏转换时调用 */
         UiEnd.prototype.rotateView = function () {
             // console.info("rotateView", this.screenType);
-            var gPeople = this.gPeople;
             if (this.screenType == 1 /* VERTICAL */) {
-                //竖屏
-                gPeople.horizontalCenter = NaN;
-                gPeople.left = -164;
-                gPeople.verticalCenter = -10;
             }
             else {
-                //横屏
-                gPeople.left = NaN;
-                gPeople.horizontalCenter = "-40%";
-                gPeople.verticalCenter = 90;
             }
         };
         /* =========== 框架结构代码-end =========== */
         /* =========== 业务代码-start =========== */
-        // private showLine() {
-        // 	gTween.toBigShow(this.con_line, 300, 1.5, 1, void 0, void 0, {
-        // 		callback: () => {
-        // 			gTween.loopRotate(this.line_0, 1, 7200);
-        // 			gTween.loopRotate(this.line_1, -1, 7200);
-        // 		}
-        // 	});
-        // }
-        // private showBlack() {
-        // 	gTween.fadeIn(this.black, 300);
-        // }
-        // private hideBlack() {
-        // 	gTween.fadeOut(this.black, 300);
-        // }
-        // private showTitle() {
-        // 	// this.toTopShow(this.title);
-        // 	gTween.toBigShow(this.title, 300, void 0, void 0, egret.Ease.backOut);
-        // }
-        // private showGold() {
-        // 	this.gold.open(true);
-        // 	this.toTopShow(this.gold, () => {
-        // 		// this.gold.add(GameMgr.gameview.gold.curNum);
-        // 	});
-        // }
-        // private showBanner() {
-        // 	this.con_new.visible = true;
-        // 	//内容
-        // 	gTween.toBigShow(this.con_banner, 500, void 0, void 0, egret.Ease.bounceOut, void 0, {
-        // 		callback: this.playBanner,
-        // 		thisObj: this
-        // 	});
-        // }
-        // private playBanner() {
-        // 	this.showShine();
-        // 	this.arrow0.addEventListener(egret.TouchEvent.TOUCH_TAP, this.playBannerLeft, this);
-        // 	this.arrow1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.playBannerRight, this);
-        // 	this.playBannerDelay = egret.setTimeout(this.playBannerLeft, this, 2500);
-        // }
-        // private showShine() {
-        // 	// gTween.toBigShow(this.shine, 1000, void 0, void 0, egret.Ease.bounceOut, void 0, {
-        // 	// 	callback: () => {
-        // 	// 		gTween.loopRotate(this.shine, 1, 7200);
-        // 	// 	}
-        // 	// });
-        // 	gTween.fadeIn(this.shine, 200, 1, void 0, void 0, {
-        // 		callback: () => {
-        // 			gTween.loopRotate(this.shine, 1, 7200);
-        // 		}
-        // 	});
-        // }
-        // private curBannerId: number;
-        // private playBannerDelay: number;
-        // private playBannerTimer: number = 300;
-        // private playBannering: boolean;
-        // private playBannerLeft(event?: egret.TouchEvent) {
-        // 	if (event) {
-        // 		event.stopPropagation();
-        // 		Mapi.sendAction(4);
-        // 		gComMgr.clickAim(event.target, gConst.clkAimType.SCALE, { x: 1, y: 1 });
-        // 	}
-        // 	egret.clearTimeout(this.playBannerDelay);
-        // 	if (this.playBannering) {
-        // 		return;
-        // 	}
-        // 	this.playBannering = true;
-        // 	for (let i: number = 0; i < 3; i++) {
-        // 		let banner: eui.Image = this["banner" + i] as eui.Image;
-        // 		gTween.rmTweens(banner);
-        // 		if (banner.x <= -banner.width) {
-        // 			//左边的往右放
-        // 			egret.Tween.get(banner).to({ x: -2 * banner.width }, this.playBannerTimer).call(() => {
-        // 				gTween.rmTweens(banner);
-        // 				banner.x = banner.width;
-        // 				let id: number = this.curBannerId + 1;
-        // 				if (id > this.bannerMax) {
-        // 					id = 1;
-        // 				}
-        // 				banner.name = id + "";
-        // 				banner.source = this.bannerBefore + id + "_png";
-        // 				this.playBannering = false;
-        // 				this.playBannerDelay = egret.setTimeout(this.playBannerLeft, this, 2500);
-        // 			}, this);
-        // 		} else if (banner.x > 0) {
-        // 			//右边的显示
-        // 			this.curBannerId = Number(banner.name);
-        // 			egret.Tween.get(banner).to({ x: 0, alpha: 1 }, this.playBannerTimer).call(gTween.rmTweens, gTween, [banner]);
-        // 		} else {
-        // 			//中间的隐藏
-        // 			egret.Tween.get(banner).to({ x: -banner.width, alpha: 0 }, this.playBannerTimer).call(gTween.rmTweens, gTween, [banner]);
-        // 		}
-        // 	}
-        // }
-        // private playBannerRight(event?: egret.TouchEvent) {
-        // 	if (event) {
-        // 		event.stopPropagation();
-        // 		Mapi.sendAction(4);
-        // 		gComMgr.clickAim(event.target, gConst.clkAimType.SCALE, { x: -1, y: 1 });
-        // 	}
-        // 	egret.clearTimeout(this.playBannerDelay);
-        // 	if (this.playBannering) {
-        // 		return;
-        // 	}
-        // 	this.playBannering = true;
-        // 	for (let i: number = 0; i < 3; i++) {
-        // 		let banner: eui.Image = this["banner" + i] as eui.Image;
-        // 		gTween.rmTweens(banner);
-        // 		if (banner.x >= banner.width) {
-        // 			//右边的往左放
-        // 			egret.Tween.get(banner).to({ x: 2 * banner.width }, this.playBannerTimer).call(() => {
-        // 				gTween.rmTweens(banner);
-        // 				banner.x = -banner.width;
-        // 				let id: number = this.curBannerId - 1;
-        // 				if (id <= 0) {
-        // 					id = this.bannerMax;
-        // 				}
-        // 				banner.name = id + "";
-        // 				banner.source = this.bannerBefore + id + "_png";
-        // 				this.playBannering = false;
-        // 				this.playBannerDelay = egret.setTimeout(this.playBannerLeft, this, 2500);
-        // 			}, this);
-        // 		} else if (banner.x < 0) {
-        // 			//右边的显示
-        // 			this.curBannerId = Number(banner.name);
-        // 			egret.Tween.get(banner).to({ x: 0, alpha: 1 }, this.playBannerTimer).call(gTween.rmTweens, gTween, [banner]);
-        // 		} else {
-        // 			//中间的隐藏
-        // 			egret.Tween.get(banner).to({ x: banner.width, alpha: 0 }, this.playBannerTimer).call(gTween.rmTweens, gTween, [banner]);
-        // 		}
-        // 	}
-        // }
+        UiEnd.prototype.restart = function () {
+            this.close();
+            GameMgr.replay();
+        };
         UiEnd.prototype.toTopShow = function (item, callback, thisObj) {
             var arg = [];
             for (var _i = 3; _i < arguments.length; _i++) {
@@ -384,39 +245,6 @@ var ui;
         // 		gSoundMgr.playEff("smfail");
         // 	}
         // }
-        UiEnd.prototype.showPeople = function () {
-            var _this = this;
-            var conPeople = this.conPeople;
-            gTween.toRightShow(conPeople, 300, void 0, void 0, 1, void 0, void 0, {
-                callback: function () {
-                    _this.showHeart();
-                }
-            });
-        };
-        UiEnd.prototype.showHeart = function () {
-            var maxS = 1.3;
-            var heart = this.heart;
-            gTween.toBigShow(heart, 200, maxS, 1, egret.Ease.cubicOut, void 0, {
-                callback: function () {
-                    var heartTw = egret.Tween.get(heart, { loop: true });
-                    heartTw.to({ scaleX: 1, scaleY: 1 }, 300, egret.Ease.cubicIn);
-                    heartTw.to({ scaleX: maxS, scaleY: maxS }, 300, egret.Ease.cubicOut);
-                }
-            });
-        };
-        UiEnd.prototype.addPattern = function (event) {
-            if (!event) {
-                return;
-            }
-            var pattern = event.data;
-            if (!pattern) {
-                return;
-            }
-            var conPattern = this.conPattern;
-            conPattern.addChild(pattern);
-            pattern.x = conPattern.width / 2;
-            pattern.y = conPattern.height / 2;
-        };
         /** 显示界面 */
         UiEnd.prototype.show = function () {
             // this.bg.visible = true;
@@ -464,11 +292,9 @@ var ui;
             // gTween.yoyoBtn(this.btn);
             // this.bg.visible = true;
             // gTween.fadeIn(this.conBg, 500, 1, void 0, void 0, { callback: this.showLogoBtn, thisObj: this });
-            this.showPeople();
         };
         /** 隐藏界面 */
         UiEnd.prototype.hide = function () {
-            var conPeople = this.conPeople;
             // this.bg.visible = false;
             // // this.black.visible = false;
             // this.conBg.visible = false;
@@ -477,7 +303,6 @@ var ui;
             // this.conBtn.visible = false;
             // this.btn.visible = false;
             // this.replay.visible = false;
-            conPeople.visible = false;
         };
         return UiEnd;
     }(ui.UiFile));

@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="skins.UiCongrats" width="750" height="1334" xmlns:e="http://ns.egret.com/eui"
         xmlns:w="http://ns.egret.com/wing" xmlns:com="com.*">
-	<e:Rect id="black" left="0" top="0" right="0" bottom="0" fillAlpha="0.6" />
-	<e:Group id="con" width="550" height="800" x="375" y="667" anchorOffsetX="275" anchorOffsetY="400">
-
-		<e:Group id="conBtn" x="275.5" y="608.5" width="257" height="137" anchorOffsetX="128.5" anchorOffsetY="68.5">
+	<e:Group id="conBg" width="750" y="667" x="375" height="1334" anchorOffsetX="375" anchorOffsetY="667">
+		<e:Image id="bg" source="pendframe_png" fillMode="repeat" left="0" right="0" top="0" bottom="0" />
+		<e:Group id="bg_mask" left="0" top="0" bottom="0" right="0">
+			<e:Rect left="0" right="0" top="0" bottom="0" />
+			<e:Rect id="erase_mask" height="680" y="297.15" width="530" blendMode="erase" fillColor="0xc64d4d" x="110" />
+		</e:Group>
+		<e:Group id="con" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" verticalCenter="-30.5" height="713">
+			<e:Image source="eframe_png" y="0" x="0" />
+			<e:Image source="eframe_png" y="0" x="0" />
+			<e:Group id="conBoy" horizontalCenter="0" verticalCenter="0">
+				<e:layout>
+					<e:HorizontalLayout/>
+				</e:layout>
+			</e:Group>
 
 		</e:Group>
-		<!--<com:ComBoxEnd id="comBoxEnd" skinName="com_box_end" x="0" y="0" width="542" height="423" />
-		-->
+		<e:Image id="btnRe" source="button3_png" y="1081.94" horizontalCenter="0" visible="false" />
+		<e:Image id="logo" source="blogo_png" y="78" horizontalCenter="-1" visible="false" />
 	</e:Group>
 </e:Skin>
