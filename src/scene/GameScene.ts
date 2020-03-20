@@ -6,9 +6,17 @@ namespace scene {
 
 		// 背景
 		public conBg: eui.Group;
+		public bg: eui.Group;
+		public bg_wall: eui.Group;
+		public tips_bg: eui.Image;
+
+
 
 		// 交互组件
 		public con: eui.Group;
+		public con_ele: eui.Group;
+		public floor_1: eui.Rect;
+		public floor_2: eui.Rect;
 
 		// 灯
 		public light_con: eui.Group;
@@ -44,6 +52,9 @@ namespace scene {
 
 		// 底部提示
 		public tips: eui.Group;
+		public tips_word1: eui.Image;
+		public tips_word2: eui.Image;
+
 
 		// 指引点
 		public guide_1: eui.Group;
@@ -253,10 +264,33 @@ namespace scene {
 			this.dispatchEventWith(gConst.eventType.RESIZE_VIEW);
 
 			const baseScale: number = gConst.mobileByScale[GameMgr.screenType][GameMgr.mobileType];
-			this.conBg.scaleX = this.conBg.scaleY = this.width / this.con.width
+
+
+			this.progress_con.scaleX = this.progress_con.scaleY = this.con.scaleX = this.con.scaleY = baseScale
+			this.tips.scaleX = this.tips.scaleY = this.width / this.tips.width
+			this.tips_word1.scaleX = this.tips_word1.scaleY = this.tips_word2.scaleX = this.tips_word2.scaleY = baseScale
 
 			if (GameMgr.screenType == gConst.screenType.VERTICAL) {
 				//竖屏
+				// this.bg_wall.scaleX = this.bg_wall.scaleY = this.height / this.bg_wall.height
+				// this.con.scaleX = this.con.scaleY = this.width / this.con.width
+				// this.conBg.scaleX = this.conBg.scaleY = this.width / this.conBg.width
+
+				this.progress_con.right = NaN
+				this.progress_con.horizontalCenter = 0
+				this.progress_con.y = 0.18 * this.height
+
+				// this.tips.y = NaN
+				this.tips.bottom = -10
+				this.tips_word1.left = NaN
+				this.tips_word2.left = NaN
+				this.tips_word1.horizontalCenter = 0
+				this.tips_word2.horizontalCenter = 0
+				this.tips_word1.y = 23
+				this.tips_word2.y = 74
+
+				this.con_ele.horizontalCenter = NaN
+				this.con_ele.x = 0
 
 				switch (GameMgr.mobileType) {
 					//iPhoneX或以上
@@ -267,11 +301,28 @@ namespace scene {
 						break;
 					//iPad或其它
 					case gConst.mobileType.IPAD:
+						this.tips.bottom = -70
 						break;
 				}
 
 			} else {
 				//横屏
+
+				this.progress_con.horizontalCenter = NaN
+				this.progress_con.right = 0.05 * this.width
+				this.progress_con.y = 0.1 * this.height
+
+				this.tips.bottom = NaN
+				this.tips.y = 0.85 * this.height
+				this.tips.width = this.width
+				this.tips_word1.left = 20
+				this.tips_word1.horizontalCenter = NaN
+				this.tips_word2.horizontalCenter = NaN
+				this.tips_word2.x = baseScale * this.tips_word1.width + 40
+				this.tips_word1.y = 40
+				this.tips_word2.y = 35
+
+				this.con_ele.horizontalCenter = 193
 
 				switch (GameMgr.mobileType) {
 					//iPhoneX或以上
@@ -291,12 +342,9 @@ namespace scene {
 		public rotateView() {
 			// console.info("GameScene.rotateView", GameMgr.screenType);
 			this.dispatchEventWith(gConst.eventType.ROTATE_VIEW);
+			const baseScale: number = gConst.mobileByScale[GameMgr.screenType][GameMgr.mobileType];
 
-			if (GameMgr.screenType == gConst.screenType.VERTICAL) {
-				//竖屏
-			} else {
-				//横屏
-			}
+
 			// this.updateHandScreen();
 		}
 
@@ -385,10 +433,10 @@ namespace scene {
 		private camera: util.CameraMgr;
 		private initBg() {
 			const con = this.con;
-			const conBg = this.conBg;
+			// const conBg = this.conBg;
 			// const conScene = this.conScene;
 
-			this.camera = new util.CameraMgr(conBg);
+			// this.camera = new util.CameraMgr(conBg);
 			// gComMgr.setObjSize(conScene, true);
 			// this.camera = new util.CameraMgr(conScene);
 		}
@@ -502,15 +550,14 @@ namespace scene {
 			this.playerAction = true
 		}
 
-		private
-
+		private victory: boolean = false
 		// 床尾
 		private boyAction1(event: egret.TouchEvent) {
 			gSoundMgr.playEff('smclick')
+			this.victory = true
 			this.progressStop()
 			const boyAction1 = this.POS_boyAction1
 			const guidePoint = this.guide_1
-
 			this.pboy_con.scaleX = -1
 			this.pboy_mc.gotoAndPlay('boy_walk')
 			gTween.toMoveX(this.pboy_con, boyAction1.x, 300, void 0, void 0, void 0, {
@@ -561,6 +608,7 @@ namespace scene {
 
 
 		}
+
 
 		// 床头
 		private boyAction2(event: egret.TouchEvent) {
@@ -614,7 +662,8 @@ namespace scene {
 			this.pboy_mc.gotoAndPlay('boy_go')
 			gTween.toMove(this.pboy_con, boyLampPoint1.x, boyLampPoint1.y, { x: 500, y: 500 }, void 0, void 0, { x: egret.Ease.quadOut, y: egret.Ease.quadOut }, void 0, {
 				callback: () => {
-					this.con.setChildIndex(this.pboy_con, 0)
+
+					this.con_ele.setChildIndex(this.pboy_con, 0)
 					this.pboy_con.y = boyLampPoint2.y
 					this.pboy_mc.gotoAndPlay('boy_lamp')
 					this.light_up.y = -100
@@ -633,7 +682,7 @@ namespace scene {
 
 		private boySuccess() {
 			egret.setTimeout(() => {
-				this.openCongrats()
+				this.openEnd()
 			}, this, 800)
 			gTween.toBottomHide(this.tips, 300)
 		}
@@ -682,7 +731,7 @@ namespace scene {
 
 		private girlFind() {
 			// egret.setTimeout(() => {
-
+			gSoundMgr.playEff('smaaaa')
 			if (this.getBoyPOSbyGirl()) {
 				this.pgirl_con.scaleX = -1
 			} else {
@@ -852,7 +901,7 @@ namespace scene {
 			this.UiFirst.open(
 				// logo
 				{
-					horDir: gConst.direction.RIGHT_TOP,
+					horDir: gConst.direction.LEFT_TOP,
 					verDir: gConst.direction.CENTER_TOP
 				}, {
 					// 下载
@@ -931,7 +980,7 @@ namespace scene {
 
 		/** 打开恭喜页面 */
 		private openCongrats() {
-			gSoundMgr.playEff('smsuccess')
+
 			this.sceneFadeOut()
 			// console.info("openCongrats");
 			// gTween.fadeIn(this.black, 300, 0.5);
@@ -977,10 +1026,16 @@ namespace scene {
 		}
 
 		private sceneFadeOut() {
-			gTween.fadeOut(this.con, 300)
+			gTween.fadeOut(this.con_ele, 300)
+			// 地板不fadeOut
+			// for (let i = 2; i < this.con.$children.length; i++) {
+			// 	gTween.fadeOut(this.con.$children[i], 300)
+			// }
+
 			gTween.fadeOut(this.progress_con, 300)
 			gTween.fadeOut(this.window1, 300)
 			gTween.fadeOut(this.window2, 300)
+
 			this.progress_tips.visible = false
 
 		}
@@ -988,7 +1043,6 @@ namespace scene {
 		/** 打开结束界面 */
 		private openEnd(isShowEnd: boolean = true) {
 			// console.info("openEnd");
-			gSoundMgr.playEff('smfail')
 			this.sceneFadeOut()
 			this.closeFirst()
 			egret.clearTimeout(this.endDelay);
@@ -1011,7 +1065,12 @@ namespace scene {
 			this.UiEnd.open();
 			egret.setTimeout(this.showEnd, this, 500);
 
-			// GameMgr.endType = gConst.endType.VICTORY;
+			if (this.victory) {
+				gSoundMgr.playEff('smsuccess')
+				GameMgr.endType = gConst.endType.VICTORY;
+			} else {
+				gSoundMgr.playEff('smfail')
+			}
 			// this.showHead();
 			// this.comPanel.stopBar();
 			// this.allStopPlay();

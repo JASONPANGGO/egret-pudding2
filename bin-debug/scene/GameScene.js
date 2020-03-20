@@ -22,6 +22,7 @@ var scene;
             _this.gridDic = {};
             _this.skillProgress = 0;
             _this.playerAction = false;
+            _this.victory = false;
             _this.goldSpace = 10;
             _this.isOpenChat = true;
             _this.skinName = skins.GameScene;
@@ -162,9 +163,27 @@ var scene;
             // console.info("resizeView", this.width, this.height, GameMgr.screenType, GameMgr.mobileType);
             this.dispatchEventWith(gConst.eventType.RESIZE_VIEW);
             var baseScale = gConst.mobileByScale[GameMgr.screenType][GameMgr.mobileType];
-            this.conBg.scaleX = this.conBg.scaleY = this.width / this.con.width;
+            this.progress_con.scaleX = this.progress_con.scaleY = this.con.scaleX = this.con.scaleY = baseScale;
+            this.tips.scaleX = this.tips.scaleY = this.width / this.tips.width;
+            this.tips_word1.scaleX = this.tips_word1.scaleY = this.tips_word2.scaleX = this.tips_word2.scaleY = baseScale;
             if (GameMgr.screenType == 1 /* VERTICAL */) {
                 //竖屏
+                // this.bg_wall.scaleX = this.bg_wall.scaleY = this.height / this.bg_wall.height
+                // this.con.scaleX = this.con.scaleY = this.width / this.con.width
+                // this.conBg.scaleX = this.conBg.scaleY = this.width / this.conBg.width
+                this.progress_con.right = NaN;
+                this.progress_con.horizontalCenter = 0;
+                this.progress_con.y = 0.18 * this.height;
+                // this.tips.y = NaN
+                this.tips.bottom = -10;
+                this.tips_word1.left = NaN;
+                this.tips_word2.left = NaN;
+                this.tips_word1.horizontalCenter = 0;
+                this.tips_word2.horizontalCenter = 0;
+                this.tips_word1.y = 23;
+                this.tips_word2.y = 74;
+                this.con_ele.horizontalCenter = NaN;
+                this.con_ele.x = 0;
                 switch (GameMgr.mobileType) {
                     //iPhoneX或以上
                     case 1 /* IPHONE_X */:
@@ -174,11 +193,25 @@ var scene;
                         break;
                     //iPad或其它
                     case 3 /* IPAD */:
+                        this.tips.bottom = -70;
                         break;
                 }
             }
             else {
                 //横屏
+                this.progress_con.horizontalCenter = NaN;
+                this.progress_con.right = 0.05 * this.width;
+                this.progress_con.y = 0.1 * this.height;
+                this.tips.bottom = NaN;
+                this.tips.y = 0.85 * this.height;
+                this.tips.width = this.width;
+                this.tips_word1.left = 20;
+                this.tips_word1.horizontalCenter = NaN;
+                this.tips_word2.horizontalCenter = NaN;
+                this.tips_word2.x = baseScale * this.tips_word1.width + 40;
+                this.tips_word1.y = 40;
+                this.tips_word2.y = 35;
+                this.con_ele.horizontalCenter = 193;
                 switch (GameMgr.mobileType) {
                     //iPhoneX或以上
                     case 1 /* IPHONE_X */:
@@ -196,10 +229,7 @@ var scene;
         GameScene.prototype.rotateView = function () {
             // console.info("GameScene.rotateView", GameMgr.screenType);
             this.dispatchEventWith(gConst.eventType.ROTATE_VIEW);
-            if (GameMgr.screenType == 1 /* VERTICAL */) {
-            }
-            else {
-            }
+            var baseScale = gConst.mobileByScale[GameMgr.screenType][GameMgr.mobileType];
             // this.updateHandScreen();
         };
         /** 重玩游戏 */
@@ -276,9 +306,9 @@ var scene;
         };
         GameScene.prototype.initBg = function () {
             var con = this.con;
-            var conBg = this.conBg;
+            // const conBg = this.conBg;
             // const conScene = this.conScene;
-            this.camera = new util.CameraMgr(conBg);
+            // this.camera = new util.CameraMgr(conBg);
             // gComMgr.setObjSize(conScene, true);
             // this.camera = new util.CameraMgr(conScene);
         };
@@ -384,6 +414,7 @@ var scene;
         GameScene.prototype.boyAction1 = function (event) {
             var _this = this;
             gSoundMgr.playEff('smclick');
+            this.victory = true;
             this.progressStop();
             var boyAction1 = this.POS_boyAction1;
             var guidePoint = this.guide_1;
@@ -481,7 +512,7 @@ var scene;
             this.pboy_mc.gotoAndPlay('boy_go');
             gTween.toMove(this.pboy_con, boyLampPoint1.x, boyLampPoint1.y, { x: 500, y: 500 }, void 0, void 0, { x: egret.Ease.quadOut, y: egret.Ease.quadOut }, void 0, {
                 callback: function () {
-                    _this.con.setChildIndex(_this.pboy_con, 0);
+                    _this.con_ele.setChildIndex(_this.pboy_con, 0);
                     _this.pboy_con.y = boyLampPoint2.y;
                     _this.pboy_mc.gotoAndPlay('boy_lamp');
                     _this.light_up.y = -100;
@@ -500,7 +531,7 @@ var scene;
         GameScene.prototype.boySuccess = function () {
             var _this = this;
             egret.setTimeout(function () {
-                _this.openCongrats();
+                _this.openEnd();
             }, this, 800);
             gTween.toBottomHide(this.tips, 300);
         };
@@ -544,8 +575,9 @@ var scene;
             }, this, 2 * 3 * 150);
         };
         GameScene.prototype.girlFind = function () {
-            // egret.setTimeout(() => {
             var _this = this;
+            // egret.setTimeout(() => {
+            gSoundMgr.playEff('smaaaa');
             if (this.getBoyPOSbyGirl()) {
                 this.pgirl_con.scaleX = -1;
             }
@@ -618,7 +650,7 @@ var scene;
             this.UiFirst.open(
             // logo
             {
-                horDir: gConst.direction.RIGHT_TOP,
+                horDir: gConst.direction.LEFT_TOP,
                 verDir: gConst.direction.CENTER_TOP
             }, {
                 // 下载
@@ -684,7 +716,6 @@ var scene;
         };
         /** 打开恭喜页面 */
         GameScene.prototype.openCongrats = function () {
-            gSoundMgr.playEff('smsuccess');
             this.sceneFadeOut();
             // console.info("openCongrats");
             // gTween.fadeIn(this.black, 300, 0.5);
@@ -723,7 +754,11 @@ var scene;
             this.UiTranEnd.close();
         };
         GameScene.prototype.sceneFadeOut = function () {
-            gTween.fadeOut(this.con, 300);
+            gTween.fadeOut(this.con_ele, 300);
+            // 地板不fadeOut
+            // for (let i = 2; i < this.con.$children.length; i++) {
+            // 	gTween.fadeOut(this.con.$children[i], 300)
+            // }
             gTween.fadeOut(this.progress_con, 300);
             gTween.fadeOut(this.window1, 300);
             gTween.fadeOut(this.window2, 300);
@@ -733,7 +768,6 @@ var scene;
         GameScene.prototype.openEnd = function (isShowEnd) {
             if (isShowEnd === void 0) { isShowEnd = true; }
             // console.info("openEnd");
-            gSoundMgr.playEff('smfail');
             this.sceneFadeOut();
             this.closeFirst();
             egret.clearTimeout(this.endDelay);
@@ -752,7 +786,13 @@ var scene;
             this.UiEnd.hide();
             this.UiEnd.open();
             egret.setTimeout(this.showEnd, this, 500);
-            // GameMgr.endType = gConst.endType.VICTORY;
+            if (this.victory) {
+                gSoundMgr.playEff('smsuccess');
+                GameMgr.endType = 1 /* VICTORY */;
+            }
+            else {
+                gSoundMgr.playEff('smfail');
+            }
             // this.showHead();
             // this.comPanel.stopBar();
             // this.allStopPlay();

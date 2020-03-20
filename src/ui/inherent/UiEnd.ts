@@ -16,11 +16,18 @@ namespace ui {
 		// public btn: eui.Image;
 
 		// public conBody: eui.Group;
+		public outCon: eui.Group;
 		public conBg: eui.Group;
+		public conBoy: eui.Group;
 		public bg: eui.Image;
 		public btnRe: eui.Image;
 		public logo: eui.Image;
 		public erase_mask: eui.Rect;
+		public con_frame: eui.Group;
+		public mask_bg: eui.Rect;
+		public btnDownload: eui.Image;
+
+
 
 		public bg_mask: eui.Group;
 		public con: eui.Group;
@@ -70,28 +77,29 @@ namespace ui {
 		/** 每次打开界面都会调用 */
 		protected start() {
 			// console.info("start");
-			// if (GameMgr.endType == gConst.endType.VICTORY) {
-			// this.showParticles();
-			// }
-			// this.mcBg.gotoAndPlay("bg");
-
-			// if (GameMgr.isShowReplay()) {
-			// 	const space: number = 20;
-			// 	// const conBtnH = this.replay.height + space + this.btn.height;
-			// 	// this.conBtn.height = conBtnH;
-			// 	// this.btn.y = conBtnH - this.btn.anchorOffsetY;
-			// 	// this.conBtn.anchorOffsetY = conBtnH / 2;
-
-			// 	this.btn.y = this.replay.y + this.replay.anchorOffsetY + space + this.btn.anchorOffsetY;
-			// }
 
 			this.bg.mask = this.bg_mask
 			this.btnRe.visible = false
+			this.btnDownload.visible = false
 			this.logo.visible = false
-			gTween.toScale(this.conBg, 1, 800, 1.8, egret.Ease.quadIn, void 0, {
+			gTween.toScale(this.outCon, 1, 800, 1.8, egret.Ease.quadIn, void 0, {
 				callback: () => {
-					gTween.fadeIn(this.boygirl, 300)
-					gTween.toTopShow(this.btnRe, 1200, 500, void 0, 1, egret.Ease.elasticOut)
+					if (GameMgr.endType === gConst.endType.VICTORY) {
+						let boyBone = new com.ComBones()
+						boyBone.setData(this.conBoy, 'ppeople')
+						boyBone.play('people', 0)
+						boyBone.setPos({ x: void 0, y: 272 })
+
+					} else {
+						gTween.toTopShow(this.btnRe, 1200, 500, void 0, 1, egret.Ease.elasticOut)
+						gTween.fadeIn(this.boygirl, 300)
+					}
+
+					gTween.toTopShow(this.btnDownload, 1200, 500, void 0, 1, egret.Ease.elasticOut, void 0, {
+						callback: () => {
+							gTween.yoyoBtn(this.btnDownload)
+						}
+					})
 					gTween.toBottomShow(this.logo, 1200, 500, void 0, 1, egret.Ease.elasticOut)
 				}
 			})
@@ -117,6 +125,9 @@ namespace ui {
 				// 	this.btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this);
 			}
 			this.btnRe.addEventListener(egret.TouchEvent.TOUCH_TAP, this.restart, this)
+			this.btnDownload.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this)
+
+
 			// this.btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickBtn, this);
 			// if (GameMgr.replayInstall()) {
 			// 	this.replay.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this);
@@ -134,6 +145,8 @@ namespace ui {
 				// } else {
 				// 	this.btn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this);
 			}
+			this.btnRe.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.restart, this)
+			this.btnDownload.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this)
 			// this.btn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickBtn, this);
 			// this.replay.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickReplay, this);
 			// this.replay.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this);
@@ -146,19 +159,39 @@ namespace ui {
 
 			const baseScale: number = gConst.mobileByScale[GameMgr.screenType][GameMgr.mobileType];
 
-			// const conLogo = this.conLogo;
-			// const conBtn = this.conBtn;
 			const conBg = this.conBg;
+			const con = this.con
+			const outCon = this.outCon
+			const bg_mask = this.bg_mask
+			const erase_mask = this.erase_mask
+			const con_frame = this.con_frame
+			const mask_bg = this.mask_bg
 
-			// conLogo.scaleX = conLogo.scaleY = baseScale;
-			// conBtn.scaleX = conBtn.scaleY = baseScale;
+			conBg.scaleX = conBg.scaleY = Math.max(this.height / conBg.height, this.width / conBg.width);
 
-			conBg.scaleX = conBg.scaleY = Math.max(this.width / conBg.width, this.height / conBg.height);
-			// conBg.width = this.width;
-			// conBg.height = this.height;
+			mask_bg.scaleX = this.width / mask_bg.width
+			mask_bg.scaleY = this.height / mask_bg.height
+
+
+
 
 			if (this.screenType == gConst.screenType.VERTICAL) {
 				//竖屏
+
+				con_frame.x = erase_mask.x = NaN
+				con_frame.horizontalCenter = erase_mask.horizontalCenter = 0
+				con_frame.scaleX = con_frame.scaleY = erase_mask.scaleX = erase_mask.scaleY = 0.7 * this.bg_mask.width / erase_mask.width
+				con_frame.width = erase_mask.width + 30
+				con_frame.height = erase_mask.height + 40
+
+				con_frame.y = erase_mask.y = 0.45 * this.height;
+
+				this.logo.x = this.btnRe.x = NaN
+				this.btnRe.horizontalCenter = this.logo.horizontalCenter = this.btnDownload.horizontalCenter = 0
+
+				this.btnRe.y = 0.8 * this.height
+				this.btnDownload.y = this.btnRe.y + this.btnRe.height + 20
+
 
 				switch (this.mobileType) {
 					//iPhoneX或以上
@@ -173,6 +206,20 @@ namespace ui {
 				}
 			} else {
 				//横屏
+				con_frame.x = erase_mask.x = 0.35 * this.width
+
+				con_frame.scaleX = con_frame.scaleY = erase_mask.scaleX = erase_mask.scaleY = 0.6 * this.bg_mask.width / erase_mask.width
+				con_frame.width = erase_mask.width + 30
+				con_frame.height = erase_mask.height + 40
+				con_frame.y = erase_mask.y = 0.5 * this.height
+
+				this.logo.y = 0.2 * this.height
+
+				this.btnDownload.horizontalCenter = this.btnRe.horizontalCenter = this.logo.horizontalCenter = NaN
+				this.btnDownload.x = this.btnRe.x = this.logo.x = 0.8 * this.width
+				this.btnRe.y = 0.6 * this.height
+				this.btnDownload.y = this.btnRe.y + this.btnRe.height + 30
+
 
 				switch (this.mobileType) {
 					//iPhoneX或以上
@@ -187,6 +234,7 @@ namespace ui {
 				}
 			}
 
+			this.erase_mask.scaleX = this.erase_mask.scaleY = this.con_frame.scaleX = this.con_frame.scaleY = this.btnRe.scaleX = this.btnRe.scaleY = this.btnDownload.scaleX = this.btnDownload.scaleY = baseScale
 			// this.con_logo.scaleX = this.con_logo.scaleY =
 			// this.con.scaleX = this.con.scaleY = baseScale;
 		}
@@ -318,7 +366,7 @@ namespace ui {
 		/** 其它元素展示 */
 		public showOther() {
 			// gSoundMgr.changeBg("bm_ending");
-			gSoundMgr.playEff("smsuccess");
+
 			this.gameEnd();
 			// this.con.visible = true;
 

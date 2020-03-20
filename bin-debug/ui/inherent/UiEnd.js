@@ -50,26 +50,28 @@ var ui;
         /** 每次打开界面都会调用 */
         UiEnd.prototype.start = function () {
             // console.info("start");
-            // if (GameMgr.endType == gConst.endType.VICTORY) {
-            // this.showParticles();
-            // }
-            // this.mcBg.gotoAndPlay("bg");
             var _this = this;
-            // if (GameMgr.isShowReplay()) {
-            // 	const space: number = 20;
-            // 	// const conBtnH = this.replay.height + space + this.btn.height;
-            // 	// this.conBtn.height = conBtnH;
-            // 	// this.btn.y = conBtnH - this.btn.anchorOffsetY;
-            // 	// this.conBtn.anchorOffsetY = conBtnH / 2;
-            // 	this.btn.y = this.replay.y + this.replay.anchorOffsetY + space + this.btn.anchorOffsetY;
-            // }
             this.bg.mask = this.bg_mask;
             this.btnRe.visible = false;
+            this.btnDownload.visible = false;
             this.logo.visible = false;
-            gTween.toScale(this.conBg, 1, 800, 1.8, egret.Ease.quadIn, void 0, {
+            gTween.toScale(this.outCon, 1, 800, 1.8, egret.Ease.quadIn, void 0, {
                 callback: function () {
-                    gTween.fadeIn(_this.boygirl, 300);
-                    gTween.toTopShow(_this.btnRe, 1200, 500, void 0, 1, egret.Ease.elasticOut);
+                    if (GameMgr.endType === 1 /* VICTORY */) {
+                        var boyBone = new com.ComBones();
+                        boyBone.setData(_this.conBoy, 'ppeople');
+                        boyBone.play('people', 0);
+                        boyBone.setPos({ x: void 0, y: 272 });
+                    }
+                    else {
+                        gTween.toTopShow(_this.btnRe, 1200, 500, void 0, 1, egret.Ease.elasticOut);
+                        gTween.fadeIn(_this.boygirl, 300);
+                    }
+                    gTween.toTopShow(_this.btnDownload, 1200, 500, void 0, 1, egret.Ease.elasticOut, void 0, {
+                        callback: function () {
+                            gTween.yoyoBtn(_this.btnDownload);
+                        }
+                    });
                     gTween.toBottomShow(_this.logo, 1200, 500, void 0, 1, egret.Ease.elasticOut);
                 }
             });
@@ -90,6 +92,7 @@ var ui;
                 this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this);
             }
             this.btnRe.addEventListener(egret.TouchEvent.TOUCH_TAP, this.restart, this);
+            this.btnDownload.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this);
             // this.btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickBtn, this);
             // if (GameMgr.replayInstall()) {
             // 	this.replay.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this);
@@ -103,6 +106,8 @@ var ui;
             if (gConst.globalClick) {
                 this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this);
             }
+            this.btnRe.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.restart, this);
+            this.btnDownload.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this);
             // this.btn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickBtn, this);
             // this.replay.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickReplay, this);
             // this.replay.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickInstall, this);
@@ -111,16 +116,28 @@ var ui;
         UiEnd.prototype.resizeView = function () {
             // console.info("resizeView", this.width, this.height);
             var baseScale = gConst.mobileByScale[GameMgr.screenType][GameMgr.mobileType];
-            // const conLogo = this.conLogo;
-            // const conBtn = this.conBtn;
             var conBg = this.conBg;
-            // conLogo.scaleX = conLogo.scaleY = baseScale;
-            // conBtn.scaleX = conBtn.scaleY = baseScale;
-            conBg.scaleX = conBg.scaleY = Math.max(this.width / conBg.width, this.height / conBg.height);
-            // conBg.width = this.width;
-            // conBg.height = this.height;
+            var con = this.con;
+            var outCon = this.outCon;
+            var bg_mask = this.bg_mask;
+            var erase_mask = this.erase_mask;
+            var con_frame = this.con_frame;
+            var mask_bg = this.mask_bg;
+            conBg.scaleX = conBg.scaleY = Math.max(this.height / conBg.height, this.width / conBg.width);
+            mask_bg.scaleX = this.width / mask_bg.width;
+            mask_bg.scaleY = this.height / mask_bg.height;
             if (this.screenType == 1 /* VERTICAL */) {
                 //竖屏
+                con_frame.x = erase_mask.x = NaN;
+                con_frame.horizontalCenter = erase_mask.horizontalCenter = 0;
+                con_frame.scaleX = con_frame.scaleY = erase_mask.scaleX = erase_mask.scaleY = 0.7 * this.bg_mask.width / erase_mask.width;
+                con_frame.width = erase_mask.width + 30;
+                con_frame.height = erase_mask.height + 40;
+                con_frame.y = erase_mask.y = 0.45 * this.height;
+                this.logo.x = this.btnRe.x = NaN;
+                this.btnRe.horizontalCenter = this.logo.horizontalCenter = this.btnDownload.horizontalCenter = 0;
+                this.btnRe.y = 0.8 * this.height;
+                this.btnDownload.y = this.btnRe.y + this.btnRe.height + 20;
                 switch (this.mobileType) {
                     //iPhoneX或以上
                     case 1 /* IPHONE_X */:
@@ -135,6 +152,16 @@ var ui;
             }
             else {
                 //横屏
+                con_frame.x = erase_mask.x = 0.35 * this.width;
+                con_frame.scaleX = con_frame.scaleY = erase_mask.scaleX = erase_mask.scaleY = 0.6 * this.bg_mask.width / erase_mask.width;
+                con_frame.width = erase_mask.width + 30;
+                con_frame.height = erase_mask.height + 40;
+                con_frame.y = erase_mask.y = 0.5 * this.height;
+                this.logo.y = 0.2 * this.height;
+                this.btnDownload.horizontalCenter = this.btnRe.horizontalCenter = this.logo.horizontalCenter = NaN;
+                this.btnDownload.x = this.btnRe.x = this.logo.x = 0.8 * this.width;
+                this.btnRe.y = 0.6 * this.height;
+                this.btnDownload.y = this.btnRe.y + this.btnRe.height + 30;
                 switch (this.mobileType) {
                     //iPhoneX或以上
                     case 1 /* IPHONE_X */:
@@ -147,6 +174,7 @@ var ui;
                         break;
                 }
             }
+            this.erase_mask.scaleX = this.erase_mask.scaleY = this.con_frame.scaleX = this.con_frame.scaleY = this.btnRe.scaleX = this.btnRe.scaleY = this.btnDownload.scaleX = this.btnDownload.scaleY = baseScale;
             // this.con_logo.scaleX = this.con_logo.scaleY =
             // this.con.scaleX = this.con.scaleY = baseScale;
         };
@@ -266,7 +294,6 @@ var ui;
         /** 其它元素展示 */
         UiEnd.prototype.showOther = function () {
             // gSoundMgr.changeBg("bm_ending");
-            gSoundMgr.playEff("smsuccess");
             this.gameEnd();
             // this.con.visible = true;
             //Banner

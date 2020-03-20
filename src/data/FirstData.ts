@@ -30,11 +30,11 @@ namespace data {
 			this.vertical = { x: 0, y: 0 }; //竖屏位置
 
 			this.topSpace = .05; //上间距
-			this.rightSpace = 25; //右间距
-			this.bottomSpace = .03 //下间距
+			this.rightSpace = 10; //右间距
+			this.bottomSpace = .01 //下间距
 			this.leftSpace = .01; //左间距
 
-			this.horRatio = 20; //横屏占比(%) (有赋值时使用占比适配)
+			this.horRatio = null; //横屏占比(%) (有赋值时使用占比适配)
 			this.verRatio = null; //竖屏占比(%) (有赋值时使用占比适配)
 			this.horSpace = null; //logo与btn横屏间距
 			this.verSpace = null; //logo与btn竖屏间距

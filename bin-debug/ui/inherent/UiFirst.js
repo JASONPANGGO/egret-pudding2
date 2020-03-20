@@ -113,6 +113,7 @@ var ui;
                 // }
                 this._updateLogoVer();
                 this._updateBtnVer();
+                this.conBtn.bottom = 0.02 * this.height;
                 switch (this.mobileType) {
                     //iPhoneX或以上
                     case 1 /* IPHONE_X */:
@@ -135,6 +136,7 @@ var ui;
                 // if (GameMgr.isEnd) {
                 // 	logoLoc.center = btnLoc.center = true;
                 // }
+                this.conBtn.bottom = 0.07 * this.height;
                 this._updateLogoHor();
                 this._updateBtnHor();
                 // if (!GameMgr.isEnd) {
