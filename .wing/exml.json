@@ -15,7 +15,13 @@
     "backgroundWidth": -1,
     "backgroundHeight": -1,
     "useBgImage": true,
-    "useBgColor": true
+    "useBgColor": true,
+    "guideLines": [
+      {
+        "type": "v",
+        "pos": -264
+      }
+    ]
   },
   "16f12950994": {
     "backgroundType": "null",

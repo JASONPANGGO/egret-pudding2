@@ -38,7 +38,7 @@
     },
     {
       "path": "resource/eui_skins/com/ComBox.exml",
-      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<e:Skin class=\"skins.ComBox\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\n        xmlns:item=\"item.*\">\n\t<e:Group id=\"con\" width=\"138\" height=\"137\">\n\t\t<e:Image id=\"bottomLayer\" source=\"box2_lv2_jpg\"/>\n\t\t<e:Image id=\"topLayer\" source=\"box1_lv2_jpg\" y=\"0\"/>\n\t</e:Group>\n</e:Skin>"
+      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<e:Skin class=\"skins.ComBox\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\r\n        xmlns:item=\"item.*\">\r\n\t<e:Group id=\"con\" width=\"138\" height=\"137\">\r\n\t\t<e:Image id=\"bottomLayer\" source=\"box2_lv2_jpg\"/>\r\n\t\t<e:Image id=\"topLayer\" source=\"box1_lv2_jpg\" y=\"0\"/>\r\n\t</e:Group>\r\n</e:Skin>"
     },
     {
       "path": "resource/eui_skins/com/ComCell.exml",
@@ -46,19 +46,19 @@
     },
     {
       "path": "resource/eui_skins/com/ComChat.exml",
-      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<e:Skin class=\"skins.ComChat\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\n        xmlns:item=\"item.*\">\n\t<e:Image id=\"hand\" source=\"head_boy_png\" x=\"50\" y=\"10\"  anchorOffsetX=\"50\" anchorOffsetY=\"50\"/>\n\t<e:Group id=\"con\" x=\"115\" y=\"0\">\n\t\t<e:Image id=\"chat\" source=\"lang_text1_png\" x=\"0\" y=\"0\"/>\n\t</e:Group>\n</e:Skin>"
+      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<e:Skin class=\"skins.ComChat\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\r\n        xmlns:item=\"item.*\">\r\n\t<e:Image id=\"hand\" source=\"head_boy_png\" x=\"50\" y=\"10\"  anchorOffsetX=\"50\" anchorOffsetY=\"50\"/>\r\n\t<e:Group id=\"con\" x=\"115\" y=\"0\">\r\n\t\t<e:Image id=\"chat\" source=\"lang_text1_png\" x=\"0\" y=\"0\"/>\r\n\t</e:Group>\r\n</e:Skin>"
     },
     {
       "path": "resource/eui_skins/com/ComCloset.exml",
-      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<e:Skin class=\"skins.ComCloset\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\n        xmlns:item=\"item.*\" width=\"351\" height=\"333\">\n\t<e:Group id=\"con\" x=\"0\" y=\"0\" width=\"351\" height=\"333\">\n\t\t<e:Image source=\"pLv2Ye_png\"/>\n\t\t<e:Image id=\"door\"  source=\"pLv2Ye1_png\"/>\n\t</e:Group>\n</e:Skin>"
+      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<e:Skin class=\"skins.ComCloset\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\r\n        xmlns:item=\"item.*\" width=\"351\" height=\"333\">\r\n\t<e:Group id=\"con\" x=\"0\" y=\"0\" width=\"351\" height=\"333\">\r\n\t\t<e:Image source=\"pLv2Ye_png\"/>\r\n\t\t<e:Image id=\"door\"  source=\"pLv2Ye1_png\"/>\r\n\t</e:Group>\r\n</e:Skin>"
     },
     {
       "path": "resource/eui_skins/com/ComDoor.exml",
-      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<e:Skin class=\"skins.ComDoor\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\n        xmlns:item=\"item.*\">\n\t<e:Group id=\"con\" x=\"0\" y=\"0\" width=\"134\" height=\"240\">\n\t\t<com:ComNpc id=\"comNpc\" skinName=\"ComNpc\" y=\"244\" x=\"67.5\" anchorOffsetX=\"69.5\" anchorOffsetY=\"214\"/>\n\t\t<e:Image source=\"pdoor1_png\" x=\"0\" y=\"0\" scaleX=\"1\" scaleY=\"1\"/>\n\t\t<e:Image id=\"door\" source=\"pdoor2_png\" x=\"0\" y=\"0\" scaleX=\"1\" scaleY=\"1\"/>\n\t</e:Group>\n</e:Skin>"
+      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<e:Skin class=\"skins.ComDoor\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\r\n        xmlns:item=\"item.*\">\r\n\t<e:Group id=\"con\" x=\"0\" y=\"0\" width=\"134\" height=\"240\">\r\n\t\t<com:ComNpc id=\"comNpc\" skinName=\"ComNpc\" y=\"244\" x=\"67.5\" anchorOffsetX=\"69.5\" anchorOffsetY=\"214\"/>\r\n\t\t<e:Image source=\"pdoor1_png\" x=\"0\" y=\"0\" scaleX=\"1\" scaleY=\"1\"/>\r\n\t\t<e:Image id=\"door\" source=\"pdoor2_png\" x=\"0\" y=\"0\" scaleX=\"1\" scaleY=\"1\"/>\r\n\t</e:Group>\r\n</e:Skin>"
     },
     {
       "path": "resource/eui_skins/com/ComHead.exml",
-      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<e:Skin class=\"skins.ComHead\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\n        xmlns:item=\"item.*\" width=\"317\" height=\"342\">\n\t<e:Group id=\"con\" x=\"0\" y=\"0\" height=\"273\" width=\"241\">\n\t\t<e:Image id=\"head\" y=\"0\" x=\"0\" scaleX=\"1\" scaleY=\"1\" source=\"ui10_head_png\"/>\n\t\t<e:Image id=\"emoji\" x=\"193\" y=\"212\" source=\"ui11_emoji_png\" anchorOffsetX=\"48\" anchorOffsetY=\"48\"/>\n\t</e:Group>\n\t<e:Image id=\"chat\" x=\"72\" y=\"146\" anchorOffsetX=\"92\" anchorOffsetY=\"3\" source=\"lang_gword3_png\"/>\n</e:Skin>"
+      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<e:Skin class=\"skins.ComHead\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\r\n        xmlns:item=\"item.*\" width=\"317\" height=\"342\">\r\n\t<e:Group id=\"con\" x=\"0\" y=\"0\" height=\"273\" width=\"241\">\r\n\t\t<e:Image id=\"head\" y=\"0\" x=\"0\" scaleX=\"1\" scaleY=\"1\" source=\"ui10_head_png\"/>\r\n\t\t<e:Image id=\"emoji\" x=\"193\" y=\"212\" source=\"ui11_emoji_png\" anchorOffsetX=\"48\" anchorOffsetY=\"48\"/>\r\n\t</e:Group>\r\n\t<e:Image id=\"chat\" x=\"72\" y=\"146\" anchorOffsetX=\"92\" anchorOffsetY=\"3\" source=\"lang_gword3_png\"/>\r\n</e:Skin>"
     },
     {
       "path": "resource/eui_skins/com/ComHouse.exml",
@@ -66,7 +66,7 @@
     },
     {
       "path": "resource/eui_skins/com/ComItem.exml",
-      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<e:Skin class=\"skins.ComItem\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\n        xmlns:item=\"item.*\" width=\"161\" height=\"161\">\n\t<e:Group id=\"con\" width=\"161\" height=\"161\" y=\"24.75\" x=\"80.5\" anchorOffsetX=\"80.5\" anchorOffsetY=\"24.75\">\n\t\t<e:Image source=\"pBottomPhoto_png\"/>\n\t\t<e:Image id=\"item\" source=\"pBottomPhoto2_png\"/>\n\t</e:Group>\n</e:Skin>"
+      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<e:Skin class=\"skins.ComItem\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\r\n        xmlns:item=\"item.*\" width=\"161\" height=\"161\">\r\n\t<e:Group id=\"con\" width=\"161\" height=\"161\" y=\"24.75\" x=\"80.5\" anchorOffsetX=\"80.5\" anchorOffsetY=\"24.75\">\r\n\t\t<e:Image source=\"pBottomPhoto_png\"/>\r\n\t\t<e:Image id=\"item\" source=\"pBottomPhoto2_png\"/>\r\n\t</e:Group>\r\n</e:Skin>"
     },
     {
       "path": "resource/eui_skins/com/ComPanel.exml",
@@ -78,7 +78,7 @@
     },
     {
       "path": "resource/eui_skins/com/ComSaw.exml",
-      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<e:Skin class=\"skins.ComSaw\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\n        xmlns:item=\"item.*\">\n\t<e:Group id=\"con\" width=\"145\" height=\"289\">\n\t\t<e:Image id=\"topLayer\" y=\"0\" source=\"stuff6_lv3_png\"/>\n\t</e:Group>\n</e:Skin>"
+      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<e:Skin class=\"skins.ComSaw\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\r\n        xmlns:item=\"item.*\">\r\n\t<e:Group id=\"con\" width=\"145\" height=\"289\">\r\n\t\t<e:Image id=\"topLayer\" y=\"0\" source=\"stuff6_lv3_png\"/>\r\n\t</e:Group>\r\n</e:Skin>"
     },
     {
       "path": "resource/eui_skins/com/ComTarget.exml",
@@ -90,7 +90,7 @@
     },
     {
       "path": "resource/eui_skins/com/ComTips.exml",
-      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<e:Skin class=\"skins.ComTips\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\n        xmlns:item=\"item.*\">\n\t<e:Group id=\"con\" x=\"0\" y=\"0\" width=\"246\" height=\"402\">\n\t\t<e:Image id=\"head\"  source=\"lang_tips_png\"/>\n\t\t<e:Group id=\"gWord\" x=\"36\" y=\"194\" anchorOffsetX=\"20\" anchorOffsetY=\"3\">\n\t\t\t<e:Group id=\"conWord\" x=\"15\" y=\"2\" width=\"233\" height=\"216\">\n\t\t\t\t<e:Group id=\"conBubble\" x=\"4\" y=\"0\" scaleX=\"0.6\" scaleY=\"0.6\" anchorOffsetX=\"32\" anchorOffsetY=\"4\" rotation=\"15\">\n\t\t\t\t\t<e:Image source=\"pDialog_png\" x=\"0\" y=\"0\"/>\n\t\t\t\t</e:Group>\n\t\t\t\t<e:Image id=\"word\" source=\"lang_tipsWord_png\" horizontalCenter=\"-32\" verticalCenter=\"-14\"/>\n\t\t\t</e:Group>\n\t\t</e:Group>\n\t</e:Group>\n</e:Skin>"
+      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<e:Skin class=\"skins.ComTips\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\r\n        xmlns:item=\"item.*\">\r\n\t<e:Group id=\"con\" x=\"0\" y=\"0\" width=\"246\" height=\"402\">\r\n\t\t<e:Image id=\"head\"  source=\"lang_tips_png\"/>\r\n\t\t<e:Group id=\"gWord\" x=\"36\" y=\"194\" anchorOffsetX=\"20\" anchorOffsetY=\"3\">\r\n\t\t\t<e:Group id=\"conWord\" x=\"15\" y=\"2\" width=\"233\" height=\"216\">\r\n\t\t\t\t<e:Group id=\"conBubble\" x=\"4\" y=\"0\" scaleX=\"0.6\" scaleY=\"0.6\" anchorOffsetX=\"32\" anchorOffsetY=\"4\" rotation=\"15\">\r\n\t\t\t\t\t<e:Image source=\"pDialog_png\" x=\"0\" y=\"0\"/>\r\n\t\t\t\t</e:Group>\r\n\t\t\t\t<e:Image id=\"word\" source=\"lang_tipsWord_png\" horizontalCenter=\"-32\" verticalCenter=\"-14\"/>\r\n\t\t\t</e:Group>\r\n\t\t</e:Group>\r\n\t</e:Group>\r\n</e:Skin>"
     },
     {
       "path": "resource/eui_skins/com/base/ComEmpty.exml",
@@ -106,7 +106,7 @@
     },
     {
       "path": "resource/eui_skins/com/inherent/ComBubble.exml",
-      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<e:Skin class=\"skins.ComBubble\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\n        xmlns:item=\"item.*\">\n\t<e:Group id=\"con\" x=\"0\" y=\"0\" width=\"335\" height=\"100\">\n\t\t<e:Group id=\"conWord\" width=\"335\" anchorOffsetX=\"148\" anchorOffsetY=\"-20\" height=\"100\" x=\"148\" y=\"-20\" scaleX=\"1\"\n\t\t         scaleY=\"1\">\n\t\t\t<e:Image id=\"bgDebug\" source=\"pHelpMe_png\" height=\"120\" anchorOffsetX=\"167.5\" anchorOffsetY=\"50\" horizontalCenter=\"0\"\n\t\t\t         width=\"335\" y=\"50\" rotation=\"180\" scale9Grid=\"37,28,7,6\" />\n\t\t\t<e:Image id=\"bgWord\" source=\"pHelpMe_png\" height=\"120\" anchorOffsetX=\"167.5\" anchorOffsetY=\"50\" horizontalCenter=\"0\"\n\t\t\t         scale9Grid=\"37,28,7,6\" width=\"335\" y=\"50\" rotation=\"0\" />\n\t\t\t<e:Image id=\"word\" source=\"lang_guide_png\" horizontalCenter=\"0\" verticalCenter=\"0\" />\n\t\t</e:Group>\n\t</e:Group>\n</e:Skin>"
+      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<e:Skin class=\"skins.ComBubble\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\r\n        xmlns:item=\"item.*\">\r\n\t<e:Group id=\"con\" x=\"0\" y=\"0\" width=\"335\" height=\"100\">\r\n\t\t<e:Group id=\"conWord\" width=\"335\" anchorOffsetX=\"148\" anchorOffsetY=\"-20\" height=\"100\" x=\"148\" y=\"-20\" scaleX=\"1\"\r\n\t\t         scaleY=\"1\">\r\n\t\t\t<e:Image id=\"bgDebug\" source=\"pHelpMe_png\" height=\"120\" anchorOffsetX=\"167.5\" anchorOffsetY=\"50\" horizontalCenter=\"0\"\r\n\t\t\t         width=\"335\" y=\"50\" rotation=\"180\" scale9Grid=\"37,28,7,6\" />\r\n\t\t\t<e:Image id=\"bgWord\" source=\"pHelpMe_png\" height=\"120\" anchorOffsetX=\"167.5\" anchorOffsetY=\"50\" horizontalCenter=\"0\"\r\n\t\t\t         scale9Grid=\"37,28,7,6\" width=\"335\" y=\"50\" rotation=\"0\" />\r\n\t\t\t<e:Image id=\"word\" source=\"lang_guide_png\" horizontalCenter=\"0\" verticalCenter=\"0\" />\r\n\t\t</e:Group>\r\n\t</e:Group>\r\n</e:Skin>"
     },
     {
       "path": "resource/eui_skins/com/inherent/ComFloat.exml",
@@ -122,7 +122,7 @@
     },
     {
       "path": "resource/eui_skins/com/inherent/ComLight.exml",
-      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<e:Skin class=\"skins.ComLight\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" width=\"285\" height=\"285\">\n\t<e:Group id=\"con\" x=\"0\" y=\"0\" width=\"285\" height=\"285\">\n\t</e:Group>\n\t<e:Image id=\"warn\" anchorOffsetX=\"35\" anchorOffsetY=\"77\" x=\"160\" y=\"128\" source=\"p_zhiyin1_png\"/>\n</e:Skin>"
+      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<e:Skin class=\"skins.ComLight\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" width=\"285\" height=\"285\">\r\n\t<e:Group id=\"con\" x=\"0\" y=\"0\" width=\"285\" height=\"285\">\r\n\t</e:Group>\r\n\t<e:Image id=\"warn\" anchorOffsetX=\"35\" anchorOffsetY=\"77\" x=\"160\" y=\"128\" source=\"p_zhiyin1_png\"/>\r\n</e:Skin>"
     },
     {
       "path": "resource/eui_skins/com/inherent/ComNav.exml",
@@ -130,11 +130,11 @@
     },
     {
       "path": "resource/eui_skins/com/inherent/ComNpc.exml",
-      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<e:Skin class=\"skins.ComNpc\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\n        xmlns:item=\"item.*\">\n\t<e:Group id=\"con\" x=\"0\" y=\"0\" width=\"139\" height=\"214\">\n\t\t<com:ComMovieClip id=\"npc\" width=\"139\" height=\"214\"/>\n\t\t<e:Image id=\"npcDebug\" x=\"0\" y=\"0\" source=\"xlz_idle_01_png\"/>\n\t\t<e:Image id=\"npcDieDebug\" y=\"-53\" x=\"-91\" source=\"xlz_bf_06_png\"/>\n\t\t<e:Group id=\"conParticles\" y=\"160\" width=\"101\" height=\"60\"  x=\"60\"/>\n\t</e:Group>\n</e:Skin>"
+      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<e:Skin class=\"skins.ComNpc\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\r\n        xmlns:item=\"item.*\">\r\n\t<e:Group id=\"con\" x=\"0\" y=\"0\" width=\"139\" height=\"214\">\r\n\t\t<com:ComMovieClip id=\"npc\" width=\"139\" height=\"214\"/>\r\n\t\t<e:Image id=\"npcDebug\" x=\"0\" y=\"0\" source=\"xlz_idle_01_png\"/>\r\n\t\t<e:Image id=\"npcDieDebug\" y=\"-53\" x=\"-91\" source=\"xlz_bf_06_png\"/>\r\n\t\t<e:Group id=\"conParticles\" y=\"160\" width=\"101\" height=\"60\"  x=\"60\"/>\r\n\t</e:Group>\r\n</e:Skin>"
     },
     {
       "path": "resource/eui_skins/com/inherent/ComPeople.exml",
-      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<e:Skin class=\"skins.ComPeople\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\n        xmlns:item=\"item.*\">\n\t<e:Group id=\"con\" x=\"11\" y=\"37\" width=\"22\" height=\"37\" anchorOffsetX=\"11\" anchorOffsetY=\"37\">\n\t\t<!--<com:ComMovieClip id=\"people\" width=\"101\" height=\"197\" />\n\t\t-->\n\t\t<!--<e:Image id=\"peopleDebug\" source=\"people1_0_ui_png\" x=\"11\" y=\"37\" anchorOffsetX=\"11\" anchorOffsetY=\"37\" />\n\t\t<e:Image id=\"peopleDieDebug\" source=\"people1_1_ui_png\" x=\"11\" y=\"37\" anchorOffsetX=\"11\" anchorOffsetY=\"37\" />\n\t\t-->\n\t\t<e:Image id=\"people\" source=\"people1_0_ui_png\" x=\"11\" y=\"37\" anchorOffsetX=\"11\" anchorOffsetY=\"37\" />\n\t\t<!--<e:Image id=\"peopleWalkDebug\" source=\"xlz_run_01_png\" x=\"0\" y=\"0\" />\n\t\t<e:Group id=\"conParticles\" y=\"120\" width=\"101\" height=\"60\" />\n\t\t<e:Image id=\"warn\" x=\"32\" y=\"32\" source=\"pScared_png\" anchorOffsetX=\"51\" anchorOffsetY=\"46\" visible=\"false\" />\n\t\t-->\n\t</e:Group>\n</e:Skin>"
+      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<e:Skin class=\"skins.ComPeople\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" xmlns:com=\"com.*\"\r\n        xmlns:item=\"item.*\">\r\n\t<e:Group id=\"con\" x=\"11\" y=\"37\" width=\"22\" height=\"37\" anchorOffsetX=\"11\" anchorOffsetY=\"37\">\r\n\t\t<!--<com:ComMovieClip id=\"people\" width=\"101\" height=\"197\" />\r\n\t\t-->\r\n\t\t<!--<e:Image id=\"peopleDebug\" source=\"people1_0_ui_png\" x=\"11\" y=\"37\" anchorOffsetX=\"11\" anchorOffsetY=\"37\" />\r\n\t\t<e:Image id=\"peopleDieDebug\" source=\"people1_1_ui_png\" x=\"11\" y=\"37\" anchorOffsetX=\"11\" anchorOffsetY=\"37\" />\r\n\t\t-->\r\n\t\t<e:Image id=\"people\" source=\"people1_0_ui_png\" x=\"11\" y=\"37\" anchorOffsetX=\"11\" anchorOffsetY=\"37\" />\r\n\t\t<!--<e:Image id=\"peopleWalkDebug\" source=\"xlz_run_01_png\" x=\"0\" y=\"0\" />\r\n\t\t<e:Group id=\"conParticles\" y=\"120\" width=\"101\" height=\"60\" />\r\n\t\t<e:Image id=\"warn\" x=\"32\" y=\"32\" source=\"pScared_png\" anchorOffsetX=\"51\" anchorOffsetY=\"46\" visible=\"false\" />\r\n\t\t-->\r\n\t</e:Group>\r\n</e:Skin>"
     },
     {
       "path": "resource/eui_skins/com/inherent/ComProgress.exml",

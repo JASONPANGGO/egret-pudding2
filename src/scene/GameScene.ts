@@ -33,7 +33,6 @@ namespace scene {
 		public cover_flip: eui.Image;
 		public cover_flipping: eui.Image;
 
-
 		// 男孩
 		public pboy_con: eui.Group;
 		public pboy_mc: com.ComMovieClip;
@@ -209,6 +208,8 @@ namespace scene {
 			this.guide_1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.boyAction1, this)
 			this.guide_2.addEventListener(egret.TouchEvent.TOUCH_TAP, this.boyAction2, this)
 			this.guide_3.addEventListener(egret.TouchEvent.TOUCH_TAP, this.boyAction3, this)
+
+			this.con.addEventListener(egret.TouchEvent.TOUCH_TAP, this.wrongTap, this)
 			// GameMgr.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchStage, this);
 			// GameMgr.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchStageStart, this);
 			// GameMgr.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.touchStageMove, this);
@@ -224,6 +225,8 @@ namespace scene {
 			this.guide_1.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.boyAction1, this)
 			this.guide_2.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.boyAction2, this)
 			this.guide_3.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.boyAction3, this)
+
+			this.con.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.wrongTap, this)
 			// GameMgr.stage.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchStage, this);
 			// GameMgr.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchStageStart, this);
 			// GameMgr.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.touchStageMove, this);
@@ -265,22 +268,19 @@ namespace scene {
 
 			const baseScale: number = gConst.mobileByScale[GameMgr.screenType][GameMgr.mobileType];
 
-
 			this.progress_con.scaleX = this.progress_con.scaleY = this.con.scaleX = this.con.scaleY = baseScale
-			this.tips.scaleX = this.tips.scaleY = this.width / this.tips.width
+			// this.tips_bg.scaleX = this.tips_bg.scaleY = this.width / this.tips_bg.width
 			this.tips_word1.scaleX = this.tips_word1.scaleY = this.tips_word2.scaleX = this.tips_word2.scaleY = baseScale
 
 			if (GameMgr.screenType == gConst.screenType.VERTICAL) {
 				//竖屏
-				// this.bg_wall.scaleX = this.bg_wall.scaleY = this.height / this.bg_wall.height
-				// this.con.scaleX = this.con.scaleY = this.width / this.con.width
-				// this.conBg.scaleX = this.conBg.scaleY = this.width / this.conBg.width
+
 
 				this.progress_con.right = NaN
 				this.progress_con.horizontalCenter = 0
 				this.progress_con.y = 0.18 * this.height
 
-				// this.tips.y = NaN
+				this.tips.width = this.width
 				this.tips.bottom = -10
 				this.tips_word1.left = NaN
 				this.tips_word2.left = NaN
@@ -307,6 +307,7 @@ namespace scene {
 
 			} else {
 				//横屏
+
 
 				this.progress_con.horizontalCenter = NaN
 				this.progress_con.right = 0.05 * this.width
@@ -342,10 +343,7 @@ namespace scene {
 		public rotateView() {
 			// console.info("GameScene.rotateView", GameMgr.screenType);
 			this.dispatchEventWith(gConst.eventType.ROTATE_VIEW);
-			const baseScale: number = gConst.mobileByScale[GameMgr.screenType][GameMgr.mobileType];
-
-
-			// this.updateHandScreen();
+			// const baseScale: number = gConst.mobileByScale[GameMgr.screenType][GameMgr.mobileType];
 		}
 
 		/** 重玩游戏 */
@@ -367,31 +365,9 @@ namespace scene {
 			if (this.UiFirst) {
 				this.UiFirst.destroy();
 			}
-			if (this.UiStart) {
-				this.UiStart.destroy();
-			}
-			if (this.UiTran) {
-				this.UiTran.destroy();
-			}
-			if (this.UiTranEnd) {
-				this.UiTranEnd.destroy();
-			}
 			if (this.UiEnd) {
 				this.UiEnd.destroy();
 			}
-			if (this.UiEndFail) {
-				this.UiEndFail.destroy();
-			}
-			// if (this.UiChat) {
-			// 	this.UiChat.destroy();
-			// }
-			if (this.UiCongrats) {
-				this.UiCongrats.destroy();
-			}
-			// if (this.UiPeople) {
-			// 	this.UiPeople.destroy();
-			// }
-
 			this.removeEvent();
 		}
 
@@ -444,6 +420,10 @@ namespace scene {
 		private tipsEnter() {
 			gTween.toTopShow(this.tips, 800, 300, void 0, 1, egret.Ease.quadOut)
 
+		}
+
+		private wrongTap(event: egret.TouchEvent) {
+			gSoundMgr.playEff('smwrong')
 		}
 
 		private loadMovieClip() {
